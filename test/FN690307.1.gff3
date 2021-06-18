@@ -1,0 +1,7 @@
+##sequence-region FN690307.1 1 1682
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=175274
+FN690307.1	EMBL	region	1	1682	.	+	.	ID=FN690307.1:1..1682;Dbxref=taxon:175274;clone=7-G4;clone-lib=7;country=Finland:Gulf of Finland;environmental-sample=true;gbkey=Src;isolation-source=sea ice;lat-lon=60.12 N 25.11 E;mol_type=genomic DNA
+FN690307.1	EMBL	gene	1	1682	.	+	.	ID=gene-18S rRNA;Name=18S rRNA;end_range=1682,.;gbkey=Gene;gene=18S rRNA;gene_biotype=rRNA;partial=true;start_range=.,1
+FN690307.1	EMBL	rRNA	1	1682	.	+	.	ID=rna-18S rRNA;Parent=gene-18S rRNA;end_range=1682,.;gbkey=rRNA;gene=18S rRNA;partial=true;product=18S ribosomal RNA;start_range=.,1
+FN690307.1	EMBL	exon	1	1682	.	+	.	ID=exon-18S rRNA-1;Parent=rna-18S rRNA;end_range=1682,.;gbkey=rRNA;gene=18S rRNA;partial=true;product=18S ribosomal RNA;start_range=.,1
+

@@ -36,7 +36,7 @@ include { Fastp_PE }from './modules.nf'
 include { Minimap2 }from './modules.nf'
 include { Star_PE }from './modules.nf'
 include { Star_SE }from './modules.nf'
-include { Hold }from './modules.nf'
+include { Rename }from './modules.nf'
 include { Generate_col_data }from './modules.nf'
 
 // these params must be defined in nextflow.config? or is it defined on the fly via the CLI?
@@ -99,21 +99,22 @@ workflow{
                 )
             }
         }
+
+// combining paired and single end workflows here
+// converts minimap2 sam to bam here too
+    if (params.NANOPORE){ 
+        Rename( 
+            Minimap2.out.collect()
+        )
+    }
+    else if ( params.PAIRED_END ){ 
+        Rename(
+        Star_PE.out.toList()
+        )
+    } 
+    else if ( params.SINGLE_END) { 
+        Rename(
+        Star_SE.out.collect()
+        )
+    }
 }
-    // combining paired and single end workflows here
-//     if (params.NANOPORE){ 
-//         Hold( 
-//             Minimap2.out.collect()
-//         )
-//     }
-//     else if ( params.PAIRED_END ){ 
-//         Hold(
-//         Star_PE.out.toList()
-//         )
-//     } 
-//     else if ( params.SINGLE_END) { 
-//         Hold(
-//         Star_SE.out.collect()
-//         )
-//     }
-// }

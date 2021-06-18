@@ -1,0 +1,55 @@
+STAR version=                 2.7.5c
+STAR compilation time,server,dir=Mon Aug 17 06:17:50 UTC 2020 :/private/tmp/star-aligner-20200817-15787-1h7nwql/STAR-2.7.5c/source
+##### Command Line:
+star --runMode genomeGenerate --genomeDir starTestIndex/ --genomeSAindexNbases 7 --genomeFastaFiles FN690307.1.fasta
+##### Initial USER parameters from Command Line:
+###### All USER parameters from Command Line:
+runMode                       genomeGenerate     ~RE-DEFINED
+genomeDir                     starTestIndex/     ~RE-DEFINED
+genomeSAindexNbases           7     ~RE-DEFINED
+genomeFastaFiles              FN690307.1.fasta        ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runMode                           genomeGenerate
+genomeDir                         starTestIndex/
+genomeFastaFiles                  FN690307.1.fasta   
+genomeSAindexNbases               7
+
+-------------------------------
+##### Final effective command line:
+star   --runMode genomeGenerate   --genomeDir starTestIndex/   --genomeFastaFiles FN690307.1.fasta      --genomeSAindexNbases 7
+----------------------------------------
+
+Number of fastq files for each mate = 1
+Finished loading and checking parameters
+--genomeDir directory created: starTestIndex/
+Jun 18 11:38:30 ... starting to generate Genome files
+FN690307.1.fasta : chr # 0  "FN690307.1" chrStart: 0
+Chromosome sequence lengths: 
+FN690307.1	1682
+Genome sequence total length = 1682
+Genome size with padding = 262144
+!!!!! WARNING: --genomeSAindexNbases 7 is too large for the genome size=1682, which may cause seg-fault at the mapping step. Re-run genome generation with recommended --genomeSAindexNbases 4
+Estimated genome size with padding and SJs: total=genome+SJ=201262144 = 262144 + 201000000
+GstrandBit=32
+Number of SA indices: 3352
+Jun 18 11:38:30 ... starting to sort Suffix Array. This may take a long time...
+Number of chunks: 1;   chunks size limit: 18599685304 bytes
+Jun 18 11:38:30 ... sorting Suffix Array chunks and saving them to disk...
+Writing 26816 bytes into starTestIndex//SA_0 ; empty space on disk = 50911422447616 bytes ... done
+Jun 18 11:38:30 ... loading chunks from disk, packing SA...
+Jun 18 11:38:30 ... finished generating suffix array
+Jun 18 11:38:30 ... generating Suffix Array index
+Jun 18 11:38:30 ... completed Suffix Array index
+Jun 18 11:38:30 ... writing Genome to disk ...
+Writing 262144 bytes into starTestIndex//Genome ; empty space on disk = 50911421399040 bytes ... done
+SA size in bytes: 13830
+Jun 18 11:38:30 ... writing Suffix Array to disk ...
+Writing 13830 bytes into starTestIndex//SA ; empty space on disk = 50911354290176 bytes ... done
+Jun 18 11:38:30 ... writing SAindex to disk
+Writing 8 bytes into starTestIndex//SAindex ; empty space on disk = 50911350095872 bytes ... done
+Writing 64 bytes into starTestIndex//SAindex ; empty space on disk = 50911350095872 bytes ... done
+Writing 95571 bytes into starTestIndex//SAindex ; empty space on disk = 50911350095872 bytes ... done
+Jun 18 11:38:30 ..... finished successfully
+DONE: Genome generation, EXITING

@@ -86,7 +86,7 @@ input:
     tuple val(base), file(r1)
     file(Minimap2_ref)
 output: 
-    tuple val(base), file("${base}.minimap2.sam")
+    file "${base}.minimap2.sam"
 
 script:
 """
@@ -117,7 +117,7 @@ input:
     tuple val(base), file(r1), file(r2)
     file starindex
 output: 
-    tuple val(base), file("${base}.starAligned.sortedByCoord.out.bam")
+    file "${base}.starAligned.sortedByCoord.out.bam"
 script:
 """
 #!/bin/bash
@@ -145,7 +145,7 @@ input:
     tuple val(base), file(r1)
     file starindex
 output: 
-    tuple val(base), file("${base}.starAligned.sortedByCoord.out.bam")
+    file "${base}.starAligned.sortedByCoord.out.bam"
 script:
 """
 #!/bin/bash
@@ -165,13 +165,13 @@ STAR   \
 }
 
 
-process Hold { 
+process Rename { 
 //conda "${baseDir}/env/env.yml"
 container "mgibio/samtools:1.9"
 beforeScript 'chmod o+rw .'
 cpus 1
 input: 
-    tuple val(base), file(holdFile)
+    file holdFile
 output: 
     file "*.bam"
 script:
@@ -183,14 +183,21 @@ echo "ls of directory"
 ls -lah 
 
 count=`ls -1 *.sam 2>/dev/null | wc -l`
-if [ $count != 0 ]
+if [ \$count != 0 ]
 then 
 echo "running samtools for nanopore file"
 for i in *.sam
 do
-samtools view -Sb -@ ${task.cpus} $i >  
+base=`basename -s ".bam" \$i` 
+samtools view -Sb -@ ${task.cpus} \$i > \$base.bam
+done
 fi 
 
+for i in *.bam
+do
+newbase=`echo \$i | cut -f1 -d .`
+mv \$i \$newbase.bam
+done
 
 """
 }
