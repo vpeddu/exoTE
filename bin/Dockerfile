@@ -4,7 +4,7 @@ WORKDIR /app
 
 # TODO: Once the repo gets pushed update the dockerfile to pull from the repo
 # wget exists in continuumio/miniconda3 so it should work 
-RUN wget https://github.com/vpeddu/exoTE/raw/main/env/env.yml
+RUN wget https://raw.githubusercontent.com/vpeddu/exoTE/main/bin/env.yml
 
 #COPY env.yml .
 RUN conda env create -f env.yml
