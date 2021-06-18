@@ -214,7 +214,7 @@ input:
     file bam
     file repeat_GTF
     file genomic_GTF
-    file "${baseDir}/rmsk.LINE.SINE.uniquely_annotated.csv.gz"
+    file annotations
 
 output: 
     tuple file("results/assays.h5"), file('results/se.rds')

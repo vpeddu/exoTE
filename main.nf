@@ -121,6 +121,8 @@ workflow{
     }
     Chromoplots( 
         Rename.out,
+        file(repeat_GTF),
+        file(genomic_GTF)
 
     )
 }
