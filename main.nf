@@ -37,7 +37,7 @@ include { Minimap2 }from './modules.nf'
 include { Star_PE }from './modules.nf'
 include { Star_SE }from './modules.nf'
 include { Rename }from './modules.nf'
-include { Generate_col_data }from './modules.nf'
+include { Chromoplots }from './modules.nf'
 
 // these params must be defined in nextflow.config? or is it defined on the fly via the CLI?
 if (!params.INPUT_FOLDER){ exit 1, "Must provide folder containing input files with --CONTROL_INPUT" }
@@ -51,6 +51,8 @@ if (!params.INPUT_FOLDER){ exit 1, "Must provide folder containing input files w
 
 	//.ifEmpty { exit 1, "Star index not found: ${params.STAR_INDEX}" }
 
+repeat_GTF= file(params.REPEAT_GTF)
+genomic_GTF=file(params.GENOMIC_GTF)
 
 workflow{
     if ( params.NANOPORE ) { 
@@ -117,4 +119,8 @@ workflow{
         Star_SE.out.collect()
         )
     }
+    Chromoplots( 
+        Rename.out,
+
+    )
 }

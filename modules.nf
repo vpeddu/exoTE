@@ -203,20 +203,18 @@ done
 }
 
 
-process Generate_col_data { 
+process Chromoplots { 
 //conda "${baseDir}/env/env.yml"
 publishDir "${params.OUTPUT}/generate_col_data/", mode: 'symlink'
-//container "quay.io/vpeddu/te_flow"
-container "testing"
+container "quay.io/vpeddu/exote:latest"
 beforeScript 'chmod o+rw .'
-cpus 4
+cpus 2
 
 input: 
- file FASTA
- file GTF
- file SALMON_FILES
- file SALMON_INDEX
- file TXTG
+    file bam
+    file repeat_GTF
+    file genomic_GTF
+    file "${baseDir}/rmsk.LINE.SINE.uniquely_annotated.csv.gz"
 
 output: 
     tuple file("results/assays.h5"), file('results/se.rds')
@@ -232,13 +230,16 @@ source ~/.bashrc
 echo "ls of directory" 
 ls -lah 
 
-# run makeLinkedTxome 
-Rscript --vanilla ${baseDir}/R/generateLinkedTxome.R ${SALMON_INDEX}/ ${FASTA} ${GTF}
+gunzip rmsk.LINE.SINE.uniquely_annotated.csv.gz
 
-echo "built json "
 
-Rscript --vanilla ${baseDir}/R/generateColData.R . txome.json shit lol output/ ${TXTG}
-
+Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
+    rmsk.LINE.SINE.uniquely_annotated.csv.gz \
+    ${bam} \
+    ${repeat_GTF} \
+    ${genomic_GTF} \
+    ${task.cpus} \
+    `basename -s ".bam" *.bam`
 
 """
 }

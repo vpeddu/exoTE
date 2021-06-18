@@ -1,18 +1,19 @@
-FROM continuumio/miniconda3
+# Base image https://hub.docker.com/u/rocker/
+FROM rocker/r-ubuntu:20.04
 
-WORKDIR /app
+RUN apt-get -y update && apt-get install -y default-jdk r-cran-rjava r-cran-nloptr libssh2-1-dev libgit2-dev libfontconfig1-dev libcairo2-dev
+RUN apt-get install -y libxml2-dev libcurl4-openssl-dev libssl-dev
 
-# TODO: Once the repo gets pushed update the dockerfile to pull from the repo
-# wget exists in continuumio/miniconda3 so it should work 
-RUN wget https://raw.githubusercontent.com/vpeddu/exoTE/main/bin/env.yml
-
-#COPY env.yml .
-RUN conda env create -f env.yml
-
-
-SHELL ["conda", "run", "-n", "TE_Flow", "/bin/bash", "-c"]
-#ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "TE_Flow"]
-
-EXPOSE 5003
-# The code to run when container is started:
-#ENTRYPOINT ["conda", "activate", "TE_Flow"]
+RUN R -e "install.packages('BiocManager')"
+RUN R -e "install.packages('ape',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "BiocManager::install('ggtree')"
+RUN R -e "BiocManager::install('viridis')"
+RUN R -e "BiocManager::install('reshape2')"
+RUN R -e "BiocManager::install('tidyverse')"
+RUN R -e "BiocManager::install('Rsubread')"
+RUN R -e "BiocManager::install('Rsamtools')"
+RUN R -e "BiocManager::install('biomaRt')"
+RUN R -e "install.packages('vdiffr',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('ggstance',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('ggplotify',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('chromoMap',dependencies=TRUE, repos='http://cran.rstudio.com/')"
