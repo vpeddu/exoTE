@@ -1,72 +1,165 @@
-Jun-18 15:53:20.236 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf --STAR_INDEX /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/test/starTestIndex --ILLUMINA --SINGLE_END --INPUT_FOLDER test_fastq_single_small/ --OUTPUT test_output -resume -with-docker 'ubuntu:18.04' --REPEAT_GTF /Users/vikas/Documents/UCSC/lab/kim_lab/refs/all_repeats_unique_gene_id.gtf --GENOMIC_GTF /Users/vikas/Documents/UCSC/lab/kim_lab/refs/gencode.v38.annotation.gtf
-Jun-18 15:53:20.350 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 20.07.1
-Jun-18 15:53:20.367 [main] INFO  nextflow.cli.CmdRun - Launching `main.nf` [focused_mahavira] - revision: 7af208509e
-Jun-18 15:53:20.398 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/nextflow.config
-Jun-18 15:53:20.400 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/nextflow.config
-Jun-18 15:53:20.442 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
-Jun-18 15:53:20.903 [main] DEBUG nextflow.config.ConfigBuilder - Enabling execution in Docker container as requested by cli option `-with-docker ubuntu:18.04`
-Jun-18 15:53:20.964 [main] DEBUG nextflow.Session - Session uuid: 03521f27-a505-409e-9544-ab822574eb4d
-Jun-18 15:53:20.964 [main] DEBUG nextflow.Session - Run name: focused_mahavira
-Jun-18 15:53:20.965 [main] DEBUG nextflow.Session - Executor pool size: 8
-Jun-18 15:53:21.128 [main] DEBUG nextflow.cli.CmdRun - 
+Jun-18 16:23:51.809 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf --STAR_INDEX /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/test/starTestIndex --ILLUMINA --SINGLE_END --INPUT_FOLDER test_fastq_single_small/ --OUTPUT test_output -resume -with-docker 'ubuntu:18.04' --REPEAT_GTF /Users/vikas/Documents/UCSC/lab/kim_lab/refs/all_repeats_unique_gene_id.gtf --GENOMIC_GTF /Users/vikas/Documents/UCSC/lab/kim_lab/refs/gencode.v38.annotation.gtf
+Jun-18 16:23:51.949 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 20.07.1
+Jun-18 16:23:51.978 [main] INFO  nextflow.cli.CmdRun - Launching `main.nf` [curious_panini] - revision: dc8529be4b
+Jun-18 16:23:52.019 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/nextflow.config
+Jun-18 16:23:52.020 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/nextflow.config
+Jun-18 16:23:52.068 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Jun-18 16:23:52.773 [main] DEBUG nextflow.config.ConfigBuilder - Enabling execution in Docker container as requested by cli option `-with-docker ubuntu:18.04`
+Jun-18 16:23:52.828 [main] DEBUG nextflow.Session - Session uuid: 03521f27-a505-409e-9544-ab822574eb4d
+Jun-18 16:23:52.828 [main] DEBUG nextflow.Session - Run name: curious_panini
+Jun-18 16:23:52.829 [main] DEBUG nextflow.Session - Executor pool size: 8
+Jun-18 16:23:52.860 [main] DEBUG nextflow.cli.CmdRun - 
   Version: 20.07.1 build 5412
   Created: 24-07-2020 15:18 UTC (08:18 PDT)
   System: Mac OS X 10.15.7
   Runtime: Groovy 2.5.11 on Java HotSpot(TM) 64-Bit Server VM 1.8.0_144-b01
   Encoding: UTF-8 (UTF-8)
-  Process: 12307@MacBook-Pro-2.local [127.0.0.1]
-  CPUs: 8 - Mem: 16 GB (1.4 GB) - Swap: 10 GB (1.2 GB)
-Jun-18 15:53:21.167 [main] DEBUG nextflow.Session - Work-dir: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/work [Mac OS X]
-Jun-18 15:53:21.303 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
-Jun-18 15:53:21.306 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
-Jun-18 15:53:21.500 [main] DEBUG nextflow.Session - Session start invoked
-Jun-18 15:53:21.800 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
-Jun-18 15:53:22.060 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: Star_PE, Fastp_PE, Chromoplots, Minimap2, Star_SE, Fastp_SE, Rename
-Jun-18 15:53:22.067 [main] WARN  nextflow.script.ScriptBinding - Access to undefined parameter `NANOPORE` -- Initialise it to a default value eg. `params.NANOPORE = some_value`
-Jun-18 15:53:22.115 [main] WARN  nextflow.script.ScriptBinding - Access to undefined parameter `PAIRED_END` -- Initialise it to a default value eg. `params.PAIRED_END = some_value`
-Jun-18 15:53:22.228 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Jun-18 15:53:22.228 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jun-18 15:53:22.233 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
-Jun-18 15:53:22.238 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=16 GB; capacity=7; pollInterval=100ms; dumpInterval=5m
-Jun-18 15:53:22.354 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Jun-18 15:53:22.354 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jun-18 15:53:22.361 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Jun-18 15:53:22.362 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jun-18 15:53:22.374 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Jun-18 15:53:22.374 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jun-18 15:53:22.380 [main] DEBUG nextflow.Session - Ignite dataflow network (6)
-Jun-18 15:53:22.388 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Fastp_SE
-Jun-18 15:53:22.388 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: test_fastq_single_small/; pattern: *.fastq.gz; options: [:]
-Jun-18 15:53:22.389 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Star_SE
-Jun-18 15:53:22.389 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Rename
-Jun-18 15:53:22.390 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Chromoplots
-Jun-18 15:53:22.390 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
-Jun-18 15:53:22.403 [main] DEBUG nextflow.Session - Session await
-Jun-18 15:53:22.612 [Actor Thread 2] INFO  nextflow.processor.TaskProcessor - [fc/8e68d6] Cached process > Fastp_SE (4)
-Jun-18 15:53:22.612 [Actor Thread 1] INFO  nextflow.processor.TaskProcessor - [26/17dbed] Cached process > Fastp_SE (2)
-Jun-18 15:53:22.612 [Actor Thread 3] INFO  nextflow.processor.TaskProcessor - [84/930b23] Cached process > Fastp_SE (3)
-Jun-18 15:53:22.612 [Actor Thread 4] INFO  nextflow.processor.TaskProcessor - [09/66f586] Cached process > Fastp_SE (1)
-Jun-18 15:53:22.633 [Actor Thread 9] INFO  nextflow.processor.TaskProcessor - [b7/8bf12d] Cached process > Star_SE (1)
-Jun-18 15:53:22.633 [Actor Thread 10] INFO  nextflow.processor.TaskProcessor - [74/60425c] Cached process > Star_SE (2)
-Jun-18 15:53:22.633 [Actor Thread 11] INFO  nextflow.processor.TaskProcessor - [4b/07e462] Cached process > Star_SE (3)
-Jun-18 15:53:22.633 [Actor Thread 12] INFO  nextflow.processor.TaskProcessor - [b5/192ebc] Cached process > Star_SE (4)
-Jun-18 15:53:22.657 [Actor Thread 5] INFO  nextflow.processor.TaskProcessor - [15/70a516] Cached process > Rename
-Jun-18 15:53:22.667 [Actor Thread 5] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz -- Cause: java.nio.file.NoSuchFileException: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz
-Jun-18 15:53:22.667 [Actor Thread 12] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz -- Cause: java.nio.file.NoSuchFileException: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz
-Jun-18 15:53:22.668 [Actor Thread 2] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz -- Cause: java.nio.file.NoSuchFileException: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz
-Jun-18 15:53:22.667 [Actor Thread 3] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz -- Cause: java.nio.file.NoSuchFileException: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/rmsk.LINE.SINE.uniquely_annotated.csv.gz
-Jun-18 15:53:22.732 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jun-18 15:53:22.736 [Task submitter] INFO  nextflow.Session - [b2/2c9e0c] Submitted process > Chromoplots (1)
-Jun-18 15:53:22.743 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jun-18 15:53:22.744 [Task submitter] INFO  nextflow.Session - [30/ca2eca] Submitted process > Chromoplots (3)
-Jun-18 15:53:22.752 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jun-18 15:53:22.753 [Task submitter] INFO  nextflow.Session - [86/dd997b] Submitted process > Chromoplots (2)
-Jun-18 15:53:22.763 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jun-18 15:53:22.763 [Task submitter] INFO  nextflow.Session - [7e/8dc5ac] Submitted process > Chromoplots (4)
-Jun-18 15:53:37.223 [SIGINT handler] DEBUG nextflow.Session - Session aborted -- Cause: SIGINT
-Jun-18 15:53:37.262 [main] DEBUG nextflow.Session - Session await > all process finished
-Jun-18 15:53:37.262 [main] DEBUG nextflow.Session - Session await > all barriers passed
-Jun-18 15:53:37.276 [main] WARN  n.processor.TaskPollingMonitor - Killing pending tasks (4)
-Jun-18 15:53:37.365 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=0; ignoredCount=0; cachedCount=9; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=4; succeedDuration=0ms; failedDuration=0ms; cachedDuration=1m 54s;loadCpus=0; loadMemory=0; peakRunning=4; peakCpus=8; peakMemory=0; ]
-Jun-18 15:53:37.385 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
-Jun-18 15:53:37.441 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
+  Process: 24796@MacBook-Pro-2.local [127.0.0.1]
+  CPUs: 8 - Mem: 16 GB (110.2 MB) - Swap: 9 GB (1.1 GB)
+Jun-18 16:23:52.901 [main] DEBUG nextflow.Session - Work-dir: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/work [Mac OS X]
+Jun-18 16:23:53.047 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Jun-18 16:23:53.050 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Jun-18 16:23:53.312 [main] DEBUG nextflow.Session - Session start invoked
+Jun-18 16:23:53.641 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jun-18 16:23:53.890 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: Star_PE, Fastp_PE, Chromoplots, Minimap2, Star_SE, Fastp_SE, Rename
+Jun-18 16:23:53.896 [main] WARN  nextflow.script.ScriptBinding - Access to undefined parameter `NANOPORE` -- Initialise it to a default value eg. `params.NANOPORE = some_value`
+Jun-18 16:23:53.949 [main] WARN  nextflow.script.ScriptBinding - Access to undefined parameter `PAIRED_END` -- Initialise it to a default value eg. `params.PAIRED_END = some_value`
+Jun-18 16:23:54.078 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-18 16:23:54.078 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-18 16:23:54.084 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Jun-18 16:23:54.092 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=16 GB; capacity=7; pollInterval=100ms; dumpInterval=5m
+Jun-18 16:23:54.199 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-18 16:23:54.199 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-18 16:23:54.207 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-18 16:23:54.207 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-18 16:23:54.217 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-18 16:23:54.218 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-18 16:23:54.224 [main] DEBUG nextflow.Session - Ignite dataflow network (6)
+Jun-18 16:23:54.234 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: test_fastq_single_small/; pattern: *.fastq.gz; options: [:]
+Jun-18 16:23:54.235 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Fastp_SE
+Jun-18 16:23:54.235 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Star_SE
+Jun-18 16:23:54.236 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Rename
+Jun-18 16:23:54.236 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Chromoplots
+Jun-18 16:23:54.236 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Jun-18 16:23:54.236 [main] DEBUG nextflow.Session - Session await
+Jun-18 16:23:54.495 [Actor Thread 3] INFO  nextflow.processor.TaskProcessor - [fc/8e68d6] Cached process > Fastp_SE (4)
+Jun-18 16:23:54.495 [Actor Thread 4] INFO  nextflow.processor.TaskProcessor - [09/66f586] Cached process > Fastp_SE (1)
+Jun-18 16:23:54.495 [Actor Thread 2] INFO  nextflow.processor.TaskProcessor - [84/930b23] Cached process > Fastp_SE (3)
+Jun-18 16:23:54.495 [Actor Thread 1] INFO  nextflow.processor.TaskProcessor - [26/17dbed] Cached process > Fastp_SE (2)
+Jun-18 16:23:54.528 [Actor Thread 9] INFO  nextflow.processor.TaskProcessor - [4b/07e462] Cached process > Star_SE (1)
+Jun-18 16:23:54.528 [Actor Thread 12] INFO  nextflow.processor.TaskProcessor - [b7/8bf12d] Cached process > Star_SE (4)
+Jun-18 16:23:54.528 [Actor Thread 11] INFO  nextflow.processor.TaskProcessor - [b5/192ebc] Cached process > Star_SE (3)
+Jun-18 16:23:54.528 [Actor Thread 10] INFO  nextflow.processor.TaskProcessor - [74/60425c] Cached process > Star_SE (2)
+Jun-18 16:23:54.561 [Actor Thread 2] INFO  nextflow.processor.TaskProcessor - [15/70a516] Cached process > Rename
+Jun-18 16:23:54.649 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-18 16:23:54.657 [Task submitter] INFO  nextflow.Session - [76/40b70c] Submitted process > Chromoplots (3)
+Jun-18 16:23:54.667 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-18 16:23:54.668 [Task submitter] INFO  nextflow.Session - [89/d64993] Submitted process > Chromoplots (2)
+Jun-18 16:23:54.682 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-18 16:23:54.683 [Task submitter] INFO  nextflow.Session - [e2/aacc66] Submitted process > Chromoplots (4)
+Jun-18 16:23:54.695 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-18 16:23:54.696 [Task submitter] INFO  nextflow.Session - [70/d21115] Submitted process > Chromoplots (1)
+Jun-18 16:26:13.431 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 11; name: Chromoplots (2); status: COMPLETED; exit: 137; error: -; workDir: /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/work/89/d649937bf7586eed9f8a1f3dc6a29a]
+Jun-18 16:26:13.788 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'Chromoplots (2)'
+
+Caused by:
+  Process `Chromoplots (2)` terminated with an error exit status (137)
+
+Command executed:
+
+  #!/bin/bash
+  
+  echo "conda activate TE_Flow" >> ~/.bashrc
+  source ~/.bashrc
+  
+  #logging
+  echo "ls of directory" 
+  ls -lah 
+  
+  gunzip rmsk.LINE.SINE.uniquely_annotated.csv.gz
+  
+  
+  Rscript --vanilla /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/bin/chromo_plots.r     rmsk.LINE.SINE.uniquely_annotated.csv.gz     Test02_L001_R1_001.bam     all_repeats_unique_gene_id.gtf     gencode.v38.annotation.gtf     2     `basename -s ".bam" *.bam`
+
+Command exit status:
+  137
+
+Command output:
+  ls of directory
+  total 16K
+  drwxr-xrwx 12 root root  384 Jun 18 23:23 .
+  drwxr-xr-x  3 root root   96 Jun 18 23:23 ..
+  lrwxr-xr-x  1 root root   75 Jun 18 23:23 all_repeats_unique_gene_id.gtf -> /Users/vikas/Documents/UCSC/lab/kim_lab/refs/all_repeats_unique_gene_id.gtf
+  -rw-r--r--  1 root root    0 Jun 18 23:23 .command.begin
+  -rw-r--r--  1 root root    0 Jun 18 23:23 .command.err
+  -rw-r--r--  1 root root   16 Jun 18 23:23 .command.log
+  -rw-r--r--  1 root root   16 Jun 18 23:23 .command.out
+  -rw-r--r--  1 root root 3.7K Jun 18 23:23 .command.run
+  -rw-r--r--  1 root root  425 Jun 18 23:23 .command.sh
+  lrwxr-xr-x  1 root root   71 Jun 18 23:23 gencode.v38.annotation.gtf -> /Users/vikas/Documents/UCSC/lab/kim_lab/refs/gencode.v38.annotation.gtf
+  lrwxr-xr-x  1 root root   90 Jun 18 23:23 rmsk.LINE.SINE.uniquely_annotated.csv.gz -> /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/bin/rmsk.LINE.SINE.uniquely_annotated.csv.gz
+  lrwxr-xr-x  1 root root  137 Jun 18 23:23 Test02_L001_R1_001.bam -> /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/work/74/60425c6b10c753b4c89a5bc2668959/Test02_L001_R1_001.starAligned.sortedByCoord.out.bam
+
+Command error:
+      IQR, mad, sd, var, xtabs
+  
+  The following objects are masked from ‘package:base’:
+  
+      anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+      dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+      grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+      order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+      rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+      union, unique, unsplit, which.max, which.min
+  
+  Loading required package: S4Vectors
+  Loading required package: stats4
+  
+  Attaching package: ‘S4Vectors’
+  
+  The following object is masked from ‘package:base’:
+  
+      expand.grid
+  
+  Loading required package: IRanges
+  Loading required package: GenomicRanges
+  Loading required package: Biostrings
+  Loading required package: XVector
+  
+  Attaching package: ‘Biostrings’
+  
+  The following object is masked from ‘package:base’:
+  
+      strsplit
+  
+  ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+  ✔ ggplot2 3.3.4     ✔ purrr   0.3.4
+  ✔ tibble  3.1.2     ✔ dplyr   1.0.6
+  ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+  ✔ readr   1.4.0     ✔ forcats 0.5.1
+  ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+  ✖ dplyr::collapse()   masks Biostrings::collapse(), IRanges::collapse()
+  ✖ dplyr::combine()    masks BiocGenerics::combine()
+  ✖ purrr::compact()    masks XVector::compact()
+  ✖ dplyr::desc()       masks IRanges::desc()
+  ✖ tidyr::expand()     masks S4Vectors::expand()
+  ✖ dplyr::filter()     masks stats::filter()
+  ✖ dplyr::first()      masks S4Vectors::first()
+  ✖ dplyr::lag()        masks stats::lag()
+  ✖ ggplot2::Position() masks BiocGenerics::Position(), base::Position()
+  ✖ purrr::reduce()     masks GenomicRanges::reduce(), IRanges::reduce()
+  ✖ dplyr::rename()     masks S4Vectors::rename()
+  ✖ dplyr::slice()      masks XVector::slice(), IRanges::slice()
+  .command.sh: line 13:    12 Killed                  Rscript --vanilla /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/bin/chromo_plots.r rmsk.LINE.SINE.uniquely_annotated.csv.gz Test02_L001_R1_001.bam all_repeats_unique_gene_id.gtf gencode.v38.annotation.gtf 2 `basename -s ".bam" *.bam`
+
+Work dir:
+  /Users/vikas/Documents/UCSC/lab/kim_lab/exoTE/work/89/d649937bf7586eed9f8a1f3dc6a29a
+
+Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
+Jun-18 16:26:13.836 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Process `Chromoplots (2)` terminated with an error exit status (137)
+Jun-18 16:26:14.016 [main] DEBUG nextflow.Session - Session await > all process finished
+Jun-18 16:26:14.016 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jun-18 16:26:14.234 [main] WARN  n.processor.TaskPollingMonitor - Killing pending tasks (3)
+Jun-18 16:26:14.508 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=9; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=3; succeedDuration=0ms; failedDuration=4m 36s; cachedDuration=1m 54s;loadCpus=0; loadMemory=0; peakRunning=4; peakCpus=8; peakMemory=0; ]
+Jun-18 16:26:15.059 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Jun-18 16:26:15.230 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

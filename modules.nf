@@ -234,7 +234,7 @@ gunzip rmsk.LINE.SINE.uniquely_annotated.csv.gz
 
 
 Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
-    rmsk.LINE.SINE.uniquely_annotated.csv \
+    ${annotations} \
     ${bam} \
     ${repeat_GTF} \
     ${genomic_GTF} \

@@ -17,3 +17,4 @@ RUN R -e "install.packages('vdiffr',dependencies=TRUE, repos='http://cran.rstudi
 RUN R -e "install.packages('ggstance',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('ggplotify',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('chromoMap',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "BiocManager::install('rtracklayer')"
