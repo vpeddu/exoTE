@@ -27,8 +27,6 @@ beforeScript 'chmod o+rw .'
 cpus 4
 input: 
     tuple val(base), file(r1), file(r2)
-    val adapter
-    tuple file(a1), file(a2)
 output: 
     tuple val(base), file("${base}.trimmed.R1.fastq.gz"), file("${base}.trimmed.R2.fastq.gz")
 
@@ -52,14 +50,12 @@ fastp -w ${task.cpus} \
 
 process Fastp_SE { 
 //conda "${baseDir}/env/env.yml"
-publishDir "${params.OUTPUT}/Trimmomatic_SE/${base}", mode: 'symlink'
-container "staphb/trimmomatic"
+publishDir "${params.OUTPUT}/Fastp_SE/${base}", mode: 'symlink'
+container "bromberglab/fastp"
 beforeScript 'chmod o+rw .'
 cpus 4
 input: 
     tuple val(base), file(r1)
-    val adapter
-    tuple file(a1), file(a2)
 output: 
     tuple val(base), file("${base}.trimmed.R1.fastq.gz")
 
@@ -80,53 +76,18 @@ fastp \
 """
 }
 
-process Salmon_PE { 
+process Minimap2 { 
 //conda "${baseDir}/env/env.yml"
-publishDir "${params.OUTPUT}/Salmon_PE/${base}", mode: 'symlink', overwrite: true
-container "combinelab/salmon"
-beforeScript 'chmod o+rw .'
-cpus 4
-input: 
-    tuple val(base), file(r1), file(r2)
-    file salmonIndex
-output: 
-    tuple val(base), file("quant.sf")
-script:
-"""
-#!/bin/bash
-
-#logging
-echo "ls of directory" 
-ls -lah 
-
-echo "salmon version:" \$(salmon --version)
-
-    salmon quant \
-        -i ${salmonIndex} \
-        --libType A \
-        -1 ${r1} \
-        -2 ${r2} \
-        -p ${task.cpus} \
-        --validateMappings \
-        --gcBias \
-        --seqBias \
-        --recoverOrphans \
-        --rangeFactorizationBins 4 \
-        --output . 
-
-"""
-}
-process Salmon_SE { 
-//conda "${baseDir}/env/env.yml"
-publishDir "${params.OUTPUT}/Salmon_SE/", mode: 'symlink'
-container "combinelab/salmon"
+publishDir "${params.OUTPUT}/Minimap2/${base}", mode: 'symlink'
+container "biocontainers/minimap2:v2.15dfsg-1-deb_cv1"
 beforeScript 'chmod o+rw .'
 cpus 4
 input: 
     tuple val(base), file(r1)
-    file salmonIndex
+    file(Minimap2_ref)
 output: 
-    file "${base}"
+    tuple val(base), file("${base}.minimap2.sam")
+
 script:
 """
 #!/bin/bash
@@ -135,35 +96,84 @@ script:
 echo "ls of directory" 
 ls -lah 
 
-echo "salmon version:" \$(salmon --version)
+echo "running Minimap2 on ${base}"
 
-    salmon quant \
-        -i ${salmonIndex} \
-        --libType A \
-        -r ${r1} \
-        -p ${task.cpus} \
-        --validateMappings \
-        --gcBias \
-        --seqBias \
-        --recoverOrphans \
-        --rangeFactorizationBins 4 \
-        --output . 
+minimap2 \
+    -ax map-ont \
+    -t ${task.cpus} \
+    ${Minimap2_ref} \
+    ${r1} > \
+    ${base}.minimap2.sam
+"""
+}
 
-mkdir ${base}
-mv quant.sf ${base}
+process Star_PE { 
+//conda "${baseDir}/env/env.yml"
+publishDir "${params.OUTPUT}/Star_PE/${base}", mode: 'symlink', overwrite: true
+container "quay.io/biocontainers/star:2.7.9a--h9ee0642_0"
+beforeScript 'chmod o+rw .'
+cpus 4
+input: 
+    tuple val(base), file(r1), file(r2)
+    file starindex
+output: 
+    tuple val(base), file("${base}.starAligned.sortedByCoord.out.bam")
+script:
+"""
+#!/bin/bash
+
+#logging
+echo "ls of directory" 
+ls -lah 
+
+STAR   \
+    --runThreadN ${task.cpus}  \
+    --genomeDir ${starindex}   \
+    --readFilesIn ${r1} ${r2} \
+    --readFilesCommand zcat      \
+    --outFileNamePrefix ${base}.star   \
+    --outSAMtype BAM   SortedByCoordinate   
+"""
+}
+process Star_SE { 
+//conda "${baseDir}/env/env.yml"
+publishDir "${params.OUTPUT}/STAR_SE/", mode: 'symlink'
+container "quay.io/biocontainers/star:2.7.9a--h9ee0642_0"
+beforeScript 'chmod o+rw .'
+cpus 4
+input: 
+    tuple val(base), file(r1)
+    file starindex
+output: 
+    tuple val(base), file("${base}.starAligned.sortedByCoord.out.bam")
+script:
+"""
+#!/bin/bash
+
+#logging
+echo "ls of directory" 
+ls -lah 
+
+STAR   \
+    --runThreadN ${task.cpus}  \
+    --genomeDir ${starindex}   \
+    --readFilesIn ${r1}  \
+    --readFilesCommand zcat      \
+    --outFileNamePrefix ${base}.star   \
+    --outSAMtype BAM   SortedByCoordinate   
 """
 }
 
 
-process Salmon_hold { 
+process Hold { 
 //conda "${baseDir}/env/env.yml"
-container "combinelab/salmon"
+container "mgibio/samtools:1.9"
 beforeScript 'chmod o+rw .'
 cpus 1
 input: 
-    file quantfolder
+    tuple val(base), file(holdFile)
 output: 
-    file "salmon_files"
+    file "*.bam"
 script:
 """
 #!/bin/bash
@@ -172,8 +182,16 @@ script:
 echo "ls of directory" 
 ls -lah 
 
-mkdir salmon_files
-ls | grep -v "salmon_files" | xargs -I % mv % salmon_files
+count=`ls -1 *.sam 2>/dev/null | wc -l`
+if [ $count != 0 ]
+then 
+echo "running samtools for nanopore file"
+for i in *.sam
+do
+samtools view -Sb -@ ${task.cpus} $i >  
+fi 
+
+
 """
 }
 
