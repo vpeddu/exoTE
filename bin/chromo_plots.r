@@ -5,6 +5,9 @@ library(tidyverse)
 library(biomaRt)
 library(htmlwidgets)
 
+print('libraries imported')
+
+
 args = commandArgs(trailingOnly=TRUE)
 
 chr_info<-read.csv(args[1], header = FALSE)
