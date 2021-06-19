@@ -23,10 +23,13 @@ base= args[6]
 # subsetted to only include LINE and SINE repclass
 # each line is chromosome.start.end.strand.element_name
 full_annotations<-read_csv(args[3])
-print('read annotations')
+print('read csv')
+save.image(paste0(args[6],'fuck.rData'))
+
 repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
 
 annotations<-repeat_annotations[,c(10,1,2,3)]
+
 
 # data cleaning 
 annotations<-annotations[-which(grepl('alt',annotations$seqnames)),]
