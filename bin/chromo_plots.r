@@ -38,19 +38,22 @@ chr_info<-chr_info[order(chr_info$V1),]
 chr_info<-chr_info[,c("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chr11","chr10","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chr20","chr21","chr22","chrX","chrY")]
 #chr_info<-head(chr_info)
 
+print('files read in. starting featurecounts ')
+
 # featurecounts with rmsk gtf to assign reads 
 TE_fc_out<-featureCounts(files = args[2],
                          annot.ext = args[3],
                          isGTFAnnotationFile = T,
                          nthreads = args[5])
 
+print('TE featurecounts done ')
 # "genomic" genes
 genomic_fc_out<-featureCounts(files = args[2],
                               annot.ext = args[4],
                               isGTFAnnotationFile = T,
                               nthreads = args[5])
 
-
+print('Genomic featurecounts done')
 
 TE_fc_counts<-as.data.frame(TE_fc_out$counts)
 TE_fc_counts<-rownames_to_column(TE_fc_counts, var = 'repeat_element')
@@ -69,6 +72,8 @@ TE_chromo_df <- data.frame(TE_fc_counts$repeat_element,
 
 genomic_fc_counts<-as.data.frame(genomic_fc_out$counts)
 
+
+print('starting biomaRt')
 # filling in gene annotations for genomic with biomart
 mart <- useMart("ensembl")
 ensembl <- useDataset("hsapiens_gene_ensembl", mart)
@@ -96,11 +101,11 @@ genomic_chromo_df <- genomic_chromo_df[,c(1,5,3,4,2)]
 #test_chr<-head(chr_info,1)
 #colnames(test)<-c('a','b','c','d')
 #test$a<-c('1','2','3','4','5','6')
-
+print("saving image")
 save.image(paste0(args[6],'chromo_plots.rData'))
 
 
-
+print('making plots')
 repeat_plot<-chromoMap(list(chr_info),list(TE_chromo_df),
           data_based_color_map = T,
           plot_height = 10,
