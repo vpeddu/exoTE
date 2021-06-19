@@ -22,7 +22,7 @@ base= args[6]
 # file was generated on 6/16/21 from table browser rmsk hg38 full annotations
 # subsetted to only include LINE and SINE repclass
 # each line is chromosome.start.end.strand.element_name
-full_annotations<-read_csv(args[3])
+full_annotations<-read_csv(args[4])
 print('read csv')
 save.image(paste0(args[6],'fuck.rData'))
 
@@ -57,7 +57,7 @@ TE_fc_out<-featureCounts(files = args[2],
 print('TE featurecounts done ')
 # "genomic" genes
 genomic_fc_out<-featureCounts(files = args[2],
-                              annot.ext = args[4],
+                              annot.ext = args[7],
                               isGTFAnnotationFile = T,
                               nthreads = args[5])
 

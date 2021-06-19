@@ -215,6 +215,7 @@ input:
     file repeat_GTF
     file genomic_GTF
     file annotations
+    file chr_info
 
 output: 
     tuple file("*.csv"), file('*.rData')
@@ -235,12 +236,13 @@ gunzip *.gz
 ls -lah 
 
 Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
-    ${annotations} \
+    ${chr_info} \
     ${bam} \
     ${repeat_GTF} \
-    ${genomic_GTF} \
+    ${annotations} \
     ${task.cpus} \
-    `basename -s ".bam" *.bam`
+    `basename -s ".bam" *.bam` \
+    ${genomic_GTF}  
 
 """
 }

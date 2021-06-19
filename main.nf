@@ -123,6 +123,7 @@ workflow{
         Rename.out.flatMap(),
         file(repeat_GTF),
         file(genomic_GTF),
-        file("${baseDir}/bin/rmsk.LINE.SINE.uniquely_annotated.csv.gz")
+        file("${baseDir}/bin/rmsk.LINE.SINE.uniquely_annotated.csv.gz"),
+        file("${baseDir}/bin/chr_sizes.csv")
     )
 }
