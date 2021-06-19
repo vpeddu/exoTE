@@ -4,6 +4,7 @@ library(Rsubread)
 library(tidyverse)
 library(biomaRt)
 library(htmlwidgets)
+library(readr)
 
 print('libraries imported')
 
@@ -21,7 +22,7 @@ base= args[6]
 # file was generated on 6/16/21 from table browser rmsk hg38 full annotations
 # subsetted to only include LINE and SINE repclass
 # each line is chromosome.start.end.strand.element_name
-full_annotations<-read.csv(args[3])
+full_annotations<-read_csv(args[3])
 
 repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
 
