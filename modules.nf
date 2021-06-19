@@ -217,7 +217,7 @@ input:
     file annotations
 
 output: 
-    tuple file("results/assays.h5"), file('results/se.rds')
+    tuple file("*.csv"), file('*.rData')
 
 script:
 """
