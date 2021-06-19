@@ -15,7 +15,7 @@ bam<-as.data.frame(scanBam(args[2]))
 repeat_annotations<-as.data.frame(rtracklayer::import(args[3]))
 
 
-base= args[7]
+base= args[6]
 
 # file was generated on 6/16/21 from table browser rmsk hg38 full annotations
 # subsetted to only include LINE and SINE repclass
