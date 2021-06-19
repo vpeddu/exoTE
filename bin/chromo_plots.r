@@ -12,8 +12,9 @@ args = commandArgs(trailingOnly=TRUE)
 
 chr_info<-read.csv(args[1], header = FALSE)
 bam<-as.data.frame(scanBam(args[2]))
+print('read bam')
 repeat_annotations<-as.data.frame(rtracklayer::import(args[3]))
-
+print('read annotations')
 
 base= args[6]
 

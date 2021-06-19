@@ -230,8 +230,9 @@ source ~/.bashrc
 echo "ls of directory" 
 ls -lah 
 
-gunzip rmsk.LINE.SINE.uniquely_annotated.csv.gz
-
+echo "unzipping"
+gunzip *.gz
+ls -lah 
 
 Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
     ${annotations} \
