@@ -26,7 +26,7 @@ full_annotations<-read_csv(args[3])
 print('read csv')
 save.image(paste0(args[6],'fuck.rData'))
 
-repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
+#repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
 
 annotations<-repeat_annotations[,c(10,1,2,3)]
 
