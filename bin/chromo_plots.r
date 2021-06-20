@@ -19,8 +19,8 @@ print('read annotations')
 
 base= args[6]
 
-is_nanopore_reads = if (args[7] == 'true') TRUE else FALSE
-is_paired_end = if (args[8] == 'true') TRUE else FALSE
+is_nanopore_reads = if (args[8] == 'true') TRUE else FALSE
+is_paired_end = if (args[9] == 'true') TRUE else FALSE
 
 
 # file was generated on 6/16/21 from table browser rmsk hg38 full annotations
