@@ -18,3 +18,7 @@ RUN R -e "install.packages('ggstance',dependencies=TRUE, repos='http://cran.rstu
 RUN R -e "install.packages('ggplotify',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('chromoMap',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "BiocManager::install('rtracklayer')"
+RUN apt-get install -y haskell-platform python3-pip 
+RUN apt-get install -y pandoc
+#RUN wget https://www.github.com/jgm/pandoc/releases/download/2.14.0.2/pandoc-2.14.0.2-linux-amd64.tar.gz && \
+#    tar xvzf pandoc-2.14.0.2-linux-amd64.tar.gz --strip-components 1 -C /bin/
