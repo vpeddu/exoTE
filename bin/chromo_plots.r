@@ -41,9 +41,9 @@ annotations$gene_id<-as.character(annotations$gene_id)
 
 #colnames(annotations)[5]<-'strand'
 
-chr_info<-chr_info[which(chr_info$V1 %in% annotations$seqnames),]
+#chr_info<-chr_info[which(chr_info$V1 %in% annotations$seqnames),]
 chr_info<-chr_info[order(chr_info$V1),]
-chr_info<-chr_info[,c("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chr11","chr10","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chr20","chr21","chr22","chrX","chrY")]
+#chr_info<-chr_info[,c("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chr11","chr10","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chr20","chr21","chr22","chrX","chrY")]
 #chr_info<-head(chr_info)
 
 print('files read in. starting featurecounts ')
