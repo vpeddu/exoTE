@@ -218,7 +218,7 @@ input:
     file chr_info
 
 output: 
-    tuple file("*.csv"), file('*.rData')
+    tuple file("*.csv"), file('*.rData'), file("*.html")
 
 script:
 """
