@@ -65,9 +65,9 @@ print('Genomic featurecounts done')
 
 TE_fc_counts<-as.data.frame(TE_fc_out$counts)
 TE_fc_counts<-rownames_to_column(TE_fc_counts, var = 'repeat_element')
-TE_fc_counts<-TE_fc_counts[which(TE_fc_counts$repeat_element %in% annotations$gene_id),]
+#TE_fc_counts<-TE_fc_counts[which(TE_fc_counts$repeat_element %in% annotations$gene_id),]
 colnames(TE_fc_counts)[2]<-'counts'
-TE_fc_counts<-TE_fc_counts[TE_fc_counts$counts > 5,]
+TE_fc_counts<-TE_fc_counts[TE_fc_counts$counts > 2,]
 
 
 TE_chromo_df <- data.frame(TE_fc_counts$repeat_element,
