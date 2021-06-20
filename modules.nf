@@ -248,7 +248,9 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
     ${annotations} \
     ${task.cpus} \
     `basename -s ".bam" *.bam` \
-    ${genomic_GTF}  
+    ${genomic_GTF} \
+    ${NANOPORE} \
+    ${PAIRED_END}
 
 
 """
