@@ -26,7 +26,7 @@ full_annotations<-read_csv(args[4])
 print('read csv')
 save.image(paste0(args[6],'fuck.rData'))
 
-#repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
+repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
 
 annotations<-repeat_annotations[,c(10,1,2,3)]
 
@@ -67,7 +67,7 @@ TE_fc_counts<-as.data.frame(TE_fc_out$counts)
 TE_fc_counts<-rownames_to_column(TE_fc_counts, var = 'repeat_element')
 TE_fc_counts<-TE_fc_counts[which(TE_fc_counts$repeat_element %in% annotations$gene_id),]
 colnames(TE_fc_counts)[2]<-'counts'
-TE_fc_counts<-TE_fc_counts[TE_fc_counts$counts > 2,]
+TE_fc_counts<-TE_fc_counts[TE_fc_counts$counts > 5,]
 
 
 TE_chromo_df <- data.frame(TE_fc_counts$repeat_element,
@@ -94,9 +94,12 @@ colnames(gene_lookup)[1]<-'gene'
 genomic_fc_counts<-rownames_to_column(genomic_fc_counts, var = 'gene')
 colnames(genomic_fc_counts)[2]<-'counts'
 genomic_fc_counts<-genomic_fc_counts[genomic_fc_counts$counts > 2,]
+#genomic_fc_counts<-genomic_fc_counts[order(genomic_fc_counts$counts, decreasing = TRUE),]
+#genomic_fc_counts<-genomic_fc_counts[1:1e2,]
 
 genomic_chromo_df <- dplyr::full_join(genomic_fc_counts,gene_lookup, by = 'gene')
 genomic_chromo_df <- genomic_chromo_df[,c(1,5,3,4,2)]
+genomic_chromo_df<-genomic_chromo_df[complete.cases(genomic_chromo_df),]
 ### pileup test
 # pparam<-PileupParam(min_nucleotide_depth=3, 
 #             distinguish_strands=TRUE)
@@ -135,7 +138,7 @@ genomic_plot<-chromoMap(list(chr_info),list(genomic_chromo_df),
           title = paste(args[6],'genomic'), 
           data_type = "numeric",
           #plots = "bar",
-          heat_map = T,
+          heat_map = F,
           ch_gap = .1,
           # canvas_width = 600,
           top_margin = 1)
