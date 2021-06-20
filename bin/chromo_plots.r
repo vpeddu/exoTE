@@ -19,6 +19,10 @@ print('read annotations')
 
 base= args[6]
 
+is_nanopore_reads = if (args[7] == 'true') TRUE else FALSE
+is_paired_end = if (args[8] == 'true') TRUE else FALSE
+
+
 # file was generated on 6/16/21 from table browser rmsk hg38 full annotations
 # subsetted to only include LINE and SINE repclass
 # each line is chromosome.start.end.strand.element_name
@@ -52,7 +56,10 @@ print('files read in. starting featurecounts ')
 TE_fc_out<-featureCounts(files = args[2],
                          annot.ext = args[3],
                          isGTFAnnotationFile = T,
-                         nthreads = args[5])
+                         nthreads = args[5],
+                         isLongRead = is_nanopore_reads,
+                         isPairedEnd = is_paired_end
+                         )
 
 print('TE featurecounts done ')
 # "genomic" genes

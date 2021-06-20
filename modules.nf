@@ -205,7 +205,7 @@ done
 
 process Chromoplots { 
 //conda "${baseDir}/env/env.yml"
-publishDir "${params.OUTPUT}/generate_col_data/", mode: 'symlink'
+publishDir "${params.OUTPUT}/generate_chromo_plots/", mode: 'symlink'
 container "quay.io/vpeddu/exote:latest"
 beforeScript 'chmod o+rw .'
 cpus 2
@@ -216,6 +216,8 @@ input:
     file genomic_GTF
     file annotations
     file chr_info
+    val NANOPORE
+    val PAIRED_END
 
 output: 
     tuple file("*.csv"), file('*.rData'), file("*.html")
@@ -235,6 +237,10 @@ echo "unzipping"
 gunzip *.gz
 ls -lah 
 
+
+echo paired ${PAIRED_END}
+echo nanopore ${NANOPORE}
+
 Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
     ${chr_info} \
     ${bam} \
@@ -243,6 +249,7 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
     ${task.cpus} \
     `basename -s ".bam" *.bam` \
     ${genomic_GTF}  
+
 
 """
 }

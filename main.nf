@@ -46,7 +46,8 @@ if (!params.INPUT_FOLDER){ exit 1, "Must provide folder containing input files w
 //if (!params.OUTPUT){ exit 1, "Must provide adapter choice with --OUTPUT" }
 //if (!params.FASTA){ exit 1, "Must provide reference fasta with --FASTA" }
 //if (!params.GTF){ exit 1, "Must provide reference GTF with --GTF" }
-
+params.NANOPORE=false
+params.PAIRED_END=false
 
 
 	//.ifEmpty { exit 1, "Star index not found: ${params.STAR_INDEX}" }
@@ -124,6 +125,8 @@ workflow{
         file(repeat_GTF),
         file(genomic_GTF),
         file("${baseDir}/bin/rmsk.LINE.SINE.uniquely_annotated.csv.gz"),
-        file("${baseDir}/bin/chr_sizes.csv")
+        file("${baseDir}/bin/chr_sizes.csv"),
+        params.NANOPORE,
+        params.PAIRED_END
     )
 }
