@@ -106,9 +106,6 @@ genomic_fc_counts<-genomic_fc_counts[genomic_fc_counts$counts > 2,]
 #genomic_fc_counts<-genomic_fc_counts[order(genomic_fc_counts$counts, decreasing = TRUE),]
 #genomic_fc_counts<-genomic_fc_counts[1:1e2,]
 
-genomic_chromo_df <- dplyr::full_join(genomic_fc_counts,gene_lookup, by = 'gene')
-genomic_chromo_df <- genomic_chromo_df[,c(1,5,3,4,2)]
-genomic_chromo_df<-genomic_chromo_df[complete.cases(genomic_chromo_df),]
 
 
 TE_chromo_df<-TE_chromo_df[-which(grepl('alt',TE_chromo_df$sapply.strsplit.as.character.TE_fc_counts.repeat_element...........)),]
@@ -122,6 +119,10 @@ TE_chromo_df<-TE_chromo_df[-which(grepl('chrUn',TE_chromo_df$sapply.strsplit.as.
 
 TE_chromo_df<-TE_chromo_df[-which(grepl('\\(',TE_chromo_df$TE_fc_counts.repeat_element)),]
 TE_chromo_df<-TE_chromo_df[rep(row.names(TE_chromo_df),TE_chromo_df$TE_fc_counts.counts),]
+
+genomic_chromo_df <- dplyr::full_join(genomic_fc_counts,gene_lookup, by = 'gene')
+genomic_chromo_df <- genomic_chromo_df[,c(1,5,3,4,2)]
+genomic_chromo_df<-genomic_chromo_df[complete.cases(genomic_chromo_df),]
 genomic_chromo_df<-genomic_chromo_df[rep(row.names(genomic_chromo_df),genomic_chromo_df$counts),]
 
 print("saving image")
@@ -139,7 +140,8 @@ repeat_plot<-chromoMap(list(chr_info),list(TE_chromo_df),
           heat_map = F,
           ch_gap = .1,
           # canvas_width = 600,
-          top_margin = 1)
+          top_margin = 1,
+          labels = FALSE)
 # left_margin = 25)
 
 
@@ -153,7 +155,8 @@ genomic_plot<-chromoMap(list(chr_info),list(genomic_chromo_df),
           heat_map = F,
           ch_gap = .1,
           # canvas_width = 600,
-          top_margin = 1)
+          top_margin = 1,
+          labels = FALSE)
 
 saveWidget(
   repeat_plot,
