@@ -28,7 +28,6 @@ is_paired_end = if (args[9] == 'true') TRUE else FALSE
 # each line is chromosome.start.end.strand.element_name
 full_annotations<-read_csv(args[4])
 print('read csv')
-save.image(paste0(args[6],'fuck.rData'))
 
 repeat_annotations<-repeat_annotations[repeat_annotations$gene_id %in% full_annotations,]
 
@@ -39,6 +38,7 @@ annotations<-repeat_annotations[,c(10,1,2,3)]
 annotations<-annotations[-which(grepl('alt',annotations$seqnames)),]
 annotations<-annotations[-which(grepl('random',annotations$seqnames)),]
 annotations<-annotations[-which(grepl('chrUn',annotations$seqnames)),]
+annotations<-annotations[-which(grepl('_random',annotations$seqnames)),]
 annotations$gene_id<-as.character(annotations$gene_id)
 
 #annotations<-head(annotations,50000)
@@ -109,18 +109,21 @@ genomic_fc_counts<-genomic_fc_counts[genomic_fc_counts$counts > 2,]
 genomic_chromo_df <- dplyr::full_join(genomic_fc_counts,gene_lookup, by = 'gene')
 genomic_chromo_df <- genomic_chromo_df[,c(1,5,3,4,2)]
 genomic_chromo_df<-genomic_chromo_df[complete.cases(genomic_chromo_df),]
-### pileup test
-# pparam<-PileupParam(min_nucleotide_depth=3, 
-#             distinguish_strands=TRUE)
 
-# pup<-pileup('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/ctrl.10.0.4.bam', 
-#             index='/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/ctrl.10.0.4.bam.bai',
-#             pileupParam = pparam)
-#test<-chromo_df[1:100,]
-#chromo_df<-chromo_df[chromo_df$fc_counts.repeat_element > 0,]
-#test_chr<-head(chr_info,1)
-#colnames(test)<-c('a','b','c','d')
-#test$a<-c('1','2','3','4','5','6')
+
+TE_chromo_df<-TE_chromo_df[-which(grepl('alt',TE_chromo_df$sapply.strsplit.as.character.TE_fc_counts.repeat_element...........)),]
+TE_chromo_df<-TE_chromo_df[-which(grepl('random',TE_chromo_df$sapply.strsplit.as.character.TE_fc_counts.repeat_element...........)),]
+TE_chromo_df<-TE_chromo_df[-which(grepl('chrUn',TE_chromo_df$sapply.strsplit.as.character.TE_fc_counts.repeat_element...........)),]
+
+#genomic_chromo_df<-genomic_chromo_df[-which(grepl('alt',genomic_chromo_df$chromosome_name)),]
+#genomic_chromo_df<-genomic_chromo_df[-which(grepl('random',genomic_chromo_df$chromosome_name)),]
+#genomic_chromo_df<-genomic_chromo_df[-which(grepl('chrUn',genomic_chromo_df$chromosome_name)),]
+
+
+TE_chromo_df<-TE_chromo_df[-which(grepl('\\(',TE_chromo_df$TE_fc_counts.repeat_element)),]
+TE_chromo_df<-TE_chromo_df[rep(row.names(TE_chromo_df),TE_chromo_df$TE_fc_counts.counts),]
+genomic_chromo_df<-genomic_chromo_df[rep(row.names(genomic_chromo_df),genomic_chromo_df$counts),]
+
 print("saving image")
 save.image(paste0(args[6],'chromo_plots.rData'))
 
@@ -161,5 +164,5 @@ saveWidget(
   paste0(args[6],'_genomic_chromoplot.html')
 )
 
-write.csv(genomic_chromo_df,'genomic_chromo_df.csv')
-write.csv(TE_chromo_df,'TE_chromo_df.csv')
+write.csv(genomic_chromo_df,paste0(args[6],'_genomic_chromo_df.csv'))
+write.csv(TE_chromo_df,paste0(args[6],'_TE_chromo_df.csv')
