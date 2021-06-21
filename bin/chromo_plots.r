@@ -66,7 +66,9 @@ print('TE featurecounts done ')
 genomic_fc_out<-featureCounts(files = args[2],
                               annot.ext = args[7],
                               isGTFAnnotationFile = T,
-                              nthreads = args[5])
+                              nthreads = args[5],
+                              isLongRead = is_nanopore_reads,
+                              isPairedEnd = is_paired_end)
 
 print('Genomic featurecounts done')
 
