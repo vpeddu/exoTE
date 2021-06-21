@@ -209,6 +209,8 @@ publishDir "${params.OUTPUT}/generate_chromo_plots/", mode: 'symlink'
 container "quay.io/vpeddu/exote:latest"
 beforeScript 'chmod o+rw .'
 cpus 2
+errorStrategy 'retry'
+maxRetries 3
 
 input: 
     file bam
