@@ -37,6 +37,8 @@ include { Minimap2 }from './modules.nf'
 include { Star_PE }from './modules.nf'
 include { Star_SE }from './modules.nf'
 include { Rename }from './modules.nf'
+include { Deduplicate_PE }from './modules.nf'
+include { Deduplicate_SE }from './modules.nf'
 include { Chromoplots }from './modules.nf'
 
 // these params must be defined in nextflow.config? or is it defined on the fly via the CLI?
@@ -85,6 +87,9 @@ workflow{
             // collects all items emitted by a channel to a list, return
             Star_index_Ch.collect()
             )
+            Deduplicate_PE(
+                Star_PE.out
+            )
         }
 
         // start single end workflow
@@ -100,6 +105,9 @@ workflow{
                 Fastp_SE.out,
                 Star_index_Ch.collect()
                 )
+            Deduplicate_SE(
+                Star_SE.out
+                )
             }
         }
 
@@ -112,12 +120,12 @@ workflow{
     }
     else if ( params.PAIRED_END ){ 
         Rename(
-        Star_PE.out.toList()
+            Deduplicate_PE.out.toList()
         )
     } 
-    else if ( params.SINGLE_END) { 
+    else if ( params.SINGLE_END ) { 
         Rename(
-        Star_SE.out.collect()
+            Deduplicate_SE.out.collect()
         )
     }
     Chromoplots( 

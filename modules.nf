@@ -76,6 +76,58 @@ fastp \
 """
 }
 
+process Deduplicate_SE { 
+container "broadinstitute/picard"
+beforeScript 'chmod o+rw .'
+cpus 4
+input: 
+    file bam
+output: 
+    file "*.dedupe.bam"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+newbase=`echo \$i | cut -f1 -d .`
+
+java -jar /usr/picard/picard.jar MarkDuplicates \
+    INPUT=${bam} \
+    OUTPUT=\$newbase.deduped.bam \
+    REMOVE_DUPLICATES=true 
+"""
+}
+
+process Deduplicate_PE { 
+container "broadinstitute/picard"
+beforeScript 'chmod o+rw .'
+cpus 4
+input: 
+    file bam
+output: 
+    file "*.deduped.bam"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+newbase=`echo ${bam} | cut -f1 -d .`
+
+java -jar /usr/picard/picard.jar MarkDuplicates \
+    I=${bam} \
+    O=\$newbase.deduped.bam \
+    M=metrics.txt \
+    REMOVE_DUPLICATES=true 
+"""
+}
+
+
 process Minimap2 { 
 //conda "${baseDir}/env/env.yml"
 publishDir "${params.OUTPUT}/Minimap2/${base}", mode: 'symlink'
