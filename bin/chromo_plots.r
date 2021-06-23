@@ -5,6 +5,7 @@ library(tidyverse)
 library(biomaRt)
 library(htmlwidgets)
 library(readr)
+library(karyoploteR)
 
 print('libraries imported')
 
@@ -166,3 +167,32 @@ saveWidget(
 
 write.csv(genomic_chromo_df,paste0(args[6],'_genomic_chromo_df.csv'))
 write.csv(TE_chromo_df,paste0(args[6],'_TE_chromo_df.csv'))
+
+
+
+
+###TESTING
+# kp <- plotKaryotype(genome = "hg38", chromosomes = "chr4")
+# kpAddBaseNumbers(kp, tick.dist = 50000, add.units = TRUE)
+# kp <- kpPlotBAMCoverage(kp, data = file.path('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/BioIVT_panc6_2-5_S88.starAligned.sortedByCoord.out.bam'))
+
+# kp <- plotKaryotype(genome = "hg38", chromosomes = "chr1")
+# kpAddBaseNumbers(kp, tick.dist = 50000, add.units = TRUE)
+# kp <- kpPlotBAMCoverage(kp, 
+#                         data=file.path('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/BioIVT_panc6_2-5_S88.starAligned.sortedByCoord.out.bam'), 
+#                         max.valid.region.size = 2e8,
+#                         col="gold", 
+#                         chromosomes = 'chr1',
+#                         border="red",
+#                         density=20
+#                         )
+
+
+# bed_in<-rtracklayer::import.bed('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/test.bed')
+# kp <- plotKaryotype()
+# start.time <- Sys.time()
+# kpPlotCoverage(kp, data=bed_in)
+# end.time <- Sys.time()
+
+
+
