@@ -31,15 +31,18 @@ if (params.help){
 }
 
 
-include { Fastp_SE }from './modules.nf'
-include { Fastp_PE }from './modules.nf'
-include { Minimap2 }from './modules.nf'
-include { Star_PE }from './modules.nf'
-include { Star_SE }from './modules.nf'
-include { Rename }from './modules.nf'
-include { Deduplicate_PE }from './modules.nf'
-include { Deduplicate_SE }from './modules.nf'
-include { Chromoplots }from './modules.nf'
+include { Fastp_SE } from './modules.nf'
+include { Fastp_PE } from './modules.nf'
+include { Minimap2 } from './modules.nf'
+include { Star_PE } from './modules.nf'
+include { Star_SE } from './modules.nf'
+include { Rename } from './modules.nf'
+include { Deduplicate } from './modules.nf'
+include { NanoPlot } from './modules.nf'
+include { FastQC } from './modules.nf'
+include { Chromoplots } from './modules.nf'
+include { MultiQC } from './modules.nf'
+
 
 // these params must be defined in nextflow.config? or is it defined on the fly via the CLI?
 if (!params.INPUT_FOLDER){ exit 1, "Must provide folder containing input files with --CONTROL_INPUT" }
@@ -67,6 +70,9 @@ workflow{
             input_read_Ch,
             Minimap2_ref
         )
+        NanoPlot(
+            input_read_Ch
+        )
         }
     // defined at CLI
     else if ( params.ILLUMINA){ 
@@ -83,12 +89,15 @@ workflow{
             )
         Star_PE(
             // access output of preceeding process
-            Fastp_PE.out,
+            Fastp_PE.out[0],
             // collects all items emitted by a channel to a list, return
             Star_index_Ch.collect()
             )
-            Deduplicate_PE(
-                Star_PE.out
+            Deduplicate(
+                Star_PE.out[1]
+            )
+            FastQC(
+                Fastp_PE.out[1]
             )
         }
 
@@ -102,12 +111,15 @@ workflow{
                 input_read_Ch
                 )
             Star_SE(
-                Fastp_SE.out,
+                Fastp_SE.out[0],
                 Star_index_Ch.collect()
                 )
-            Deduplicate_SE(
-                Star_SE.out
+            Deduplicate(
+                Star_SE.out[1]
                 )
+            FastQC(
+                Fastp_SE.out[0]
+            )
             }
         }
 
@@ -120,12 +132,12 @@ workflow{
     }
     else if ( params.PAIRED_END ){ 
         Rename(
-            Deduplicate_PE.out.toList()
+            Deduplicate.out[0].toList()
         )
     } 
     else if ( params.SINGLE_END ) { 
         Rename(
-            Deduplicate_SE.out.collect()
+            Deduplicate.out[0].collect()
         )
     }
     Chromoplots( 
@@ -136,5 +148,9 @@ workflow{
         file("${baseDir}/bin/chr_sizes.csv"),
         params.NANOPORE,
         params.PAIRED_END
+    )
+    MultiQC( 
+        file("${params.OUTPUT}/"),
+        Rename.out
     )
 }

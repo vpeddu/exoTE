@@ -29,6 +29,9 @@ input:
     tuple val(base), file(r1), file(r2)
 output: 
     tuple val(base), file("${base}.trimmed.R1.fastq.gz"), file("${base}.trimmed.R2.fastq.gz")
+    tuple val(base), file("${base}.trimmed.R1.fastq.gz")
+    file "*"
+
 
 script:
 """
@@ -58,6 +61,7 @@ input:
     tuple val(base), file(r1)
 output: 
     tuple val(base), file("${base}.trimmed.R1.fastq.gz")
+    file "*"
 
 script:
 """
@@ -76,14 +80,15 @@ fastp \
 """
 }
 
-process Deduplicate_SE { 
-container "broadinstitute/picard"
+process FastQC{ 
+container "biocontainers/fastqc:v0.11.9_cv8"
 beforeScript 'chmod o+rw .'
-cpus 4
+cpus 1
+publishDir "${params.OUTPUT}/FastQC/", mode: 'symlink'
 input: 
-    file bam
+    tuple val(base), file(R1) 
 output: 
-    file "*.dedupe.bam"
+    file "*fastqc*"
 
 script:
 """
@@ -92,23 +97,48 @@ script:
 echo logging 
 ls -lah
 
-newbase=`echo \$i | cut -f1 -d .`
+fastqc *fastq.gz 
 
-java -jar /usr/picard/picard.jar MarkDuplicates \
-    INPUT=${bam} \
-    OUTPUT=\$newbase.deduped.bam \
-    REMOVE_DUPLICATES=true 
 """
 }
 
-process Deduplicate_PE { 
+process NanoPlot{ 
+container "staphb/nanoplot:1.33.0"
+beforeScript 'chmod o+rw .'
+cpus 2
+publishDir "${params.OUTPUT}/NanoPlot/", mode: 'symlink'
+input: 
+    tuple val(base), file(R1) 
+output: 
+    file "*.html"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+NanoPlot \
+    --fastq_rich ${R1} \
+    --readtype 2D \
+    -t ${task.cpus} \
+    -p ${base} \
+    --title ${base}
+
+"""
+}
+
+process Deduplicate { 
 container "broadinstitute/picard"
 beforeScript 'chmod o+rw .'
 cpus 4
+publishDir "${params.OUTPUT}/Deduplicated/", mode: 'symlink'
 input: 
     file bam
 output: 
     file "*.deduped.bam"
+    file "*.txt"
 
 script:
 """
@@ -169,6 +199,7 @@ input:
     tuple val(base), file(r1), file(r2)
     file starindex
 output: 
+    file "${base}.star*"
     file "${base}.starAligned.sortedByCoord.out.bam"
 script:
 """
@@ -189,7 +220,7 @@ STAR   \
 }
 process Star_SE { 
 //conda "${baseDir}/env/env.yml"
-publishDir "${params.OUTPUT}/STAR_SE/", mode: 'symlink'
+publishDir "${params.OUTPUT}/Star_SE/${base}", mode: 'symlink', overwrite: true
 container "quay.io/biocontainers/star:2.7.9a--h9ee0642_0"
 beforeScript 'chmod o+rw .'
 cpus 4
@@ -197,7 +228,9 @@ input:
     tuple val(base), file(r1)
     file starindex
 output: 
+    file "${base}.star*"
     file "${base}.starAligned.sortedByCoord.out.bam"
+
 script:
 """
 #!/bin/bash
@@ -306,6 +339,32 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
     ${NANOPORE} \
     ${PAIRED_END}
 
+
+"""
+}
+
+process MultiQC{ 
+container "ewels/multiqc:1.10.1"
+beforeScript 'chmod o+rw .'
+cpus 1
+publishDir "${params.OUTPUT}/MultiQC/", mode: 'symlink'
+input: 
+    file infolder
+    file renamehold
+output: 
+    file "*"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+ls /usr/local/bin/
+multiqc .
+
+echo mutliqc_finish > done.txt
 
 """
 }
