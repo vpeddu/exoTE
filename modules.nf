@@ -346,7 +346,7 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
 //could parallelize later but reasonably fast now
 process Biotyping{ 
 container "quay.io/biocontainers/alfa:1.1.1--pyh5e36f6f_0"
-beforeScript 'chmod o+rw .'
+beforeScript 'chmod  o+rw .'
 cpus 4
 publishDir "${params.OUTPUT}/Alfa/", mode: 'symlink'
 input: 
@@ -376,10 +376,10 @@ echo "finished index generation"
 
 for i in *.bam
 do
-    base=`basename -s ".bam" $i` 
+    base=`basename $i ".bam"` 
     echo working on $base
     alfa -g index.alfaindex \
-    --bam $i $basename \
+    --bam $i $base \
     -p !{task.cpus} \
     -d 3
 done 
