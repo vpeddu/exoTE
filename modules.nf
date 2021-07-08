@@ -345,7 +345,7 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
 
 //could parallelize later but reasonably fast now
 process Biotyping{ 
-conda 'bioconda::alfa'
+container "quay.io/biocontainers/alfa:1.1.1--pyh5e36f6f_0"
 beforeScript 'chmod o+rw .'
 cpus 4
 publishDir "${params.OUTPUT}/Alfa/", mode: 'symlink'
