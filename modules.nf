@@ -129,6 +129,33 @@ NanoPlot \
 """
 }
 
+process NanoPlot{ 
+container "staphb/nanoplot:1.33.0"
+beforeScript 'chmod o+rw .'
+cpus 2
+publishDir "${params.OUTPUT}/NanoPlot/", mode: 'symlink'
+input: 
+    tuple val(base), file(R1) 
+output: 
+    file "*.html"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+NanoPlot \
+    --fastq_rich ${R1} \
+    --readtype 2D \
+    -t ${task.cpus} \
+    -p ${base} \
+    --title ${base}
+
+"""
+}
+
 process Deduplicate { 
 container "broadinstitute/picard"
 beforeScript 'chmod o+rw .'
@@ -343,6 +370,42 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
 """
 }
 
+//could parallelize later but reasonably fast now
+process Biotyping{ 
+conda 'alfa'
+beforeScript 'chmod o+rw .'
+cpus 4
+publishDir "${params.OUTPUT}/Alfa/", mode: 'symlink'
+input: 
+    file bam
+    file genomic_GTF
+output: 
+    file "*.pdf"
+
+script:
+"""
+#!/bin/bash
+
+#sorting GTF
+sort -k1,1 -k4,4n -k5,5nr ${genomic_GTF} > sorted_gtf.gtf
+
+#renaming biotype field 
+sed -i 's/gene_type/gene_biotype/g' sorted_gtf.gtf
+
+alfa -a sorted_gtf.gtf -g index.alfaindex -p ${task.cpus}
+
+for i in *.bam
+do
+    base=`basename -s ".bam" \$i` 
+    alfa -g index.alfaindex \
+    --bam \$i \$basename \
+    -p ${task.cpus} \
+    -d 3
+done 
+
+
+"""
+}
 process MultiQC{ 
 container "ewels/multiqc:1.10.1"
 beforeScript 'chmod o+rw .'

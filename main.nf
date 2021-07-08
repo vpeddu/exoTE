@@ -41,6 +41,7 @@ include { Deduplicate } from './modules.nf'
 include { NanoPlot } from './modules.nf'
 include { FastQC } from './modules.nf'
 include { Chromoplots } from './modules.nf'
+include { Biotyping } from './modules.nf'
 include { MultiQC } from './modules.nf'
 
 
@@ -148,6 +149,10 @@ workflow{
         file("${baseDir}/bin/chr_sizes.csv"),
         params.NANOPORE,
         params.PAIRED_END
+    )
+    Biotyping(
+        Rename.out.collect(),
+        file(genomic_GTF)
     )
     MultiQC( 
         file("${params.OUTPUT}/"),

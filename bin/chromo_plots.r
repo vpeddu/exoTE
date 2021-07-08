@@ -6,9 +6,9 @@ library(biomaRt)
 library(htmlwidgets)
 library(readr)
 library(karyoploteR)
+library(chromstaR)
 
 print('libraries imported')
-
 
 args = commandArgs(trailingOnly=TRUE)
 
@@ -187,12 +187,139 @@ write.csv(TE_chromo_df,paste0(args[6],'_TE_chromo_df.csv'))
 #                         density=20
 #                         )
 
+## AHHHHHHHHHHHHHHHHH 
+# bed_in<-rtracklayer::import.bed('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/test.bed',
+#                                 genome = 'hg38',
+#                                 )
+# gr.cov <- as(coverage(bed_in), "GRanges")
 
-# bed_in<-rtracklayer::import.bed('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/test.bed')
-# kp <- plotKaryotype()
+# autoplot('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/BioIVT_panc6_2-5_S88.starAligned.sortedByCoord.out.bam',
+#          method = "estimate", 
+#          which = paste0("chr", 1:22), aes(y = log(..coverage..)))
+
+# bam_in<-readGAlignmentPairs('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/BioIVT_panc6_2-5_S88.starAligned.sortedByCoord.out.bam',
+#                             use.names = TRUE)
+# #dn$pvalue <- runif(length(dn)) * 10
+# p <- autoplot(seqinfo(bam_in)) + layout_karyogram(bam_in, aes(x = start, y = width),
+#                                               geom = "point", color = "#fdc086")
+
+# chroms<-c('chr1',
+#           'chr2',
+#           'chr3',
+#           'chr4',
+#           'chr5',
+#           'chr6',
+#           'chr7',
+#           'chr8',
+#           'chr9',
+#           'chr10',
+#           'chr11',
+#           'chr12',
+#           'chr13',
+#           'chr14',
+#           'chr15',
+#           'chr16',
+#           'chr17',
+#           'chr18',
+#           'chr19',
+#           'chr20',
+#           'chr21',
+#           'chr22',
+#           'chrX',
+#           'chrY',
+#           'chrM')
+# bed_in<-readBamFileAsGRanges('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/BioIVT_panc6_2-5_S88.starAligned.sortedByCoord.out.bam',
+#                              chromosomes = chroms,
+#                              pairedEndReads = TRUE)
+
+# x<-GRcoverage(Object=bed_in, bam='/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/BioIVT_panc6_2-5_S88.starAligned.sortedByCoord.out.bam', Nnorm=F, Snorm=F)
+
+
 # start.time <- Sys.time()
-# kpPlotCoverage(kp, data=bed_in)
+# kpPlotBAMDensity(kp, data='/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/gencode.test.bam',
+#                  col="gold", 
+#                  border="blue",
+#                  density=2000)
+
+# kpPlotBAMDensity(kp, data='/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/TE.test.bam',
+#                  col="gold", 
+#                  border="red",
+#                  density=2000)
+
+
+# data.points.colors <- c("#FFBD07", "#00A6ED",  "#FF3366", "#8EA604", "#C200FB")
+# kp <- plotKaryotype(genome = 'hg38',
+#                     plot.type = 1,
+#                     chromosomes = c("chr14", "chr2", "chr3"))
+# kp <- kpPlotBAMDensity(kp, data='/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/gencode_in_regions.bam', 
+#                        col=data.points.colors[1], 
+#                        border=NA, 
+#                        r0=0.5, 
+#                        r1=0,
+#                        #density = 10000,
+#                        #window.size = 1e3,
+#                        normalize = FALSE)
+# kpAxis(kp, r0=0.5, r1=0, ymax=15, numticks = 1)
+# #kpAbline(kp, h=0.4, data.panel = 2, r0=0.2, r1=0, col=data.points.colors[3])
+
+# kp <- kpPlotBAMDensity(kp, data='/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/chromo_plots/testing/TE_in_regions.bam', 
+#                        col=data.points.colors[2], 
+#                        border=NA, 
+#                        r0=0.5, 
+#                        r1=1,
+#                        #density = 10000,
+#                        #window.size = 1e3,
+#                        normalize = FALSE,)
+# kpAxis(kp, r0=0.5, r1=1, ymax=15, numticks = 1)
+
+
 # end.time <- Sys.time()
+
+
+
+
+
+# ####
+# kp <- plotKaryotype(genome = 'hg38', plot.type = 2, chromosomes = c("chr1" ))# , "chr2", "chr3"))
+# data.points.colors <- c("#FFBD07", "#00A6ED",  "#FF3366", "#8EA604", "#C200FB")
+
+
+# kpAxis(kp, ymin = 0, ymax = 1, r0=0, r1=0.8, numticks = 5, col="#666666", cex=0.5)
+# kpPoints(kp, data=bed_in, pch=16, cex=0.5, col=dp.colors, r0=0, r1=0.8)
+
+# #Mean and sd of the data points.  
+# for(chr in seqlevels(kp$genome)) {
+#   chr.dp <- sort(keepSeqlevels(x = bed_in, value = chr, pruning.mode = "coarse"))
+#   rmean <- rollmean(chr.dp$n, k = 6, align = "center")  
+#   rsd <- rollapply(data = chr.dp$y, FUN=sd, width=6)
+#   kpLines(kp, chr = chr, x=start(chr.dp)[3:(length(chr.dp)-3)], y=rmean, col=data.points.colors[3], r0=0, r1=0.8)
+#   kpPlotRibbon(kp, chr=chr, data=chr.dp[3:(length(chr.dp)-3)], y0=rmean-rsd, y1=rmean+rsd, r0=0, r1=0.8, col="#FF336633", border=NA)
+# }
+# ### Data Panel 2 ###
+
+# #medium regions and their coverage
+
+# kpPlotRegions(kp, data = bed_in, r0 = 0.2, r1=1, border=NA, data.panel=2)
+# kpPlotCoverage(kp, data=bed_in, r0=0.2, r1=0, col=data.points.colors[2], data.panel = 2)
+# kpPlotCoverage(kp, data=bed_in, r0=0.2, r1=0.12, col=data.points.colors[1], data.panel = 2)
+
+# kpText(kp, chr=seqlevels(kp$genome), y=0.4, x=0, data.panel = 2, r0=0.2, r1=0, col="#444444", label="30x", cex=0.8, pos=2)
+# kpAbline(kp, h=0.4, data.panel = 2, r0=0.2, r1=0, col=data.points.colors[3])
+
+
+
+
+
+
+# x<-GRanges(TE_fc_out$annotation$Chr, IRanges(TE_fc_out$annotation$Start, TE_fc_out$annotation$End))
+
+# genomic_fc_out$annotation$Start<-sapply(as.numeric(strsplit(as.character(genomic_fc_out$annotation$Start), ";"), "[[", 1))
+# genomic_fc_out$annotation$End<-sapply(as.numeric(strsplit(as.character(genomic_fc_out$annotation$End), ";"), "[[", 1))
+# y<-GRanges(genomic_fc_out$annotation$Chr, IRanges(genomic_fc_out$annotation$Start, genomic_fc_out$annotation$End))
+
+
+
+
 
 
 
