@@ -54,7 +54,7 @@ if (!params.INPUT_FOLDER){ exit 1, "Must provide folder containing input files w
 //if (!params.GTF){ exit 1, "Must provide reference GTF with --GTF" }
 params.NANOPORE=false
 params.PAIRED_END=false
-
+//if (!params.TEST) {params.TEST=false)
 
 	//.ifEmpty { exit 1, "Star index not found: ${params.STAR_INDEX}" }
 
