@@ -129,33 +129,6 @@ NanoPlot \
 """
 }
 
-process NanoPlot{ 
-container "staphb/nanoplot:1.33.0"
-beforeScript 'chmod o+rw .'
-cpus 2
-publishDir "${params.OUTPUT}/NanoPlot/", mode: 'symlink'
-input: 
-    tuple val(base), file(R1) 
-output: 
-    file "*.html"
-
-script:
-"""
-#!/bin/bash
-
-echo logging 
-ls -lah
-
-NanoPlot \
-    --fastq_rich ${R1} \
-    --readtype 2D \
-    -t ${task.cpus} \
-    -p ${base} \
-    --title ${base}
-
-"""
-}
-
 process Deduplicate { 
 container "broadinstitute/picard"
 beforeScript 'chmod o+rw .'
@@ -385,18 +358,26 @@ output:
 script:
 """
 #!/bin/bash
+echo logging ls
+ls -lah
+
 
 #sorting GTF
 sort -k1,1 -k4,4n -k5,5nr ${genomic_GTF} > sorted_gtf.gtf
+echo "finished sort"
 
 #renaming biotype field 
 sed -i 's/gene_type/gene_biotype/g' sorted_gtf.gtf
+echo "finished rename"
 
+#index generation
 alfa -a sorted_gtf.gtf -g index.alfaindex -p ${task.cpus}
+echo "finished index generation"
 
 for i in *.bam
 do
     base=`basename -s ".bam" \$i` 
+    echo working on \$base
     alfa -g index.alfaindex \
     --bam \$i \$basename \
     -p ${task.cpus} \

@@ -6,7 +6,7 @@ library(biomaRt)
 library(htmlwidgets)
 library(readr)
 library(karyoploteR)
-library(chromstaR)
+#library(chromstaR)
 
 print('libraries imported')
 

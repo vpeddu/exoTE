@@ -141,6 +141,7 @@ workflow{
             Deduplicate.out[0].collect()
         )
     }
+    if ( !params.TEST ) {
     Chromoplots( 
         Rename.out.flatMap(),
         file(repeat_GTF),
@@ -150,6 +151,7 @@ workflow{
         params.NANOPORE,
         params.PAIRED_END
     )
+    }
     Biotyping(
         Rename.out.collect(),
         file(genomic_GTF)
