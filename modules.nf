@@ -355,15 +355,15 @@ input:
 output: 
     file "*.pdf"
 
-script:
-"""
+shell:
+'''
 #!/bin/bash
 echo logging ls
 ls -lah
 
 
 #sorting GTF
-sort -k1,1 -k4,4n -k5,5nr ${genomic_GTF} > sorted_gtf.gtf
+sort -k1,1 -k4,4n -k5,5nr !{genomic_GTF} > sorted_gtf.gtf
 echo "finished sort"
 
 #renaming biotype field 
@@ -371,21 +371,20 @@ sed -i 's/gene_type/gene_biotype/g' sorted_gtf.gtf
 echo "finished rename"
 
 #index generation
-python alfa.py -a sorted_gtf.gtf -g index.alfaindex -p ${task.cpus}
+python alfa.py -a sorted_gtf.gtf -g index.alfaindex -p !{task.cpus}
 echo "finished index generation"
 
 for i in *.bam
 do
-    base=`basename -s ".bam" \$i` 
-    echo working on \$base
+    base=`basename -s ".bam" $i` 
+    echo working on $base
     python alfa.py -g index.alfaindex \
-    --bam \$i \$basename \
-    -p ${task.cpus} \
+    --bam $i $basename \
+    -p !{task.cpus} \
     -d 3
 done 
 
-
-"""
+'''
 }
 process MultiQC{ 
 container "ewels/multiqc:1.10.1"
