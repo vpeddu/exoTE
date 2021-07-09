@@ -9,6 +9,7 @@ RUN apt update && \
                    python3-pysam \
                    wget \
 		   libz-dev \
+		   bedtools \
                    unzip && \
     pip3 install biopython \
                  ete3 \
