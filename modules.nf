@@ -371,15 +371,15 @@ sed -i 's/gene_type/gene_biotype/g' sorted_gtf.gtf
 echo "finished rename"
 
 #index generation
-alfa -a sorted_gtf.gtf -g index.alfaindex -p !{task.cpus}
+#alfa -a sorted_gtf.gtf -g index.alfaindex -p !{task.cpus}
 echo "finished index generation"
 
 for i in *.bam
 do
     base=`basename $i ".bam"` 
     echo working on $base
-    alfa -g index.alfaindex \
-    --bam $i $basename test \
+    alfa -a sorted_gtf.gtf \
+    --bam $i $basename $base \
     -p !{task.cpus} \
     -d 3
 done 
