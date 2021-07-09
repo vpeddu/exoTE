@@ -348,7 +348,7 @@ Rscript --vanilla ${baseDir}/bin/chromo_plots.r \
 process Biotyping{ 
 container "quay.io/vpeddu/alfa"
 beforeScript 'chmod  o+rw .'
-cpus 4
+cpus 8
 publishDir "${params.OUTPUT}/Alfa/", mode: 'symlink'
 input: 
     file bam
@@ -383,6 +383,8 @@ do
     --bam $i $base \
     -p !{task.cpus} \
     -d 3
+    mv ALFA_plots.Biotypes.pdf $base.Biotypes.pdf
+    mv ALFA_plots.Categories.pdf $base.Categories.pdf
 done 
 
 '''
