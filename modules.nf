@@ -258,7 +258,7 @@ cpus 4
 input: 
     file holdFile
 output: 
-    file "*.bam"
+    file "*.sorted.bam"
 script:
 """
 #!/bin/bash
@@ -280,8 +280,9 @@ fi
 
 for i in *.bam
 do
+echo sorting \$i
 newbase=`echo \$i | cut -f1 -d .`
-samtools sort \$i -@ ${task.cpus} -o \$newbase.bam
+samtools sort \$i -@ ${task.cpus} -o \$newbase.sorted.bam
 done
 
 """
