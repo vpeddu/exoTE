@@ -377,7 +377,7 @@ echo "finished index generation"
 for i in *.bam
 do
     base=`basename $i ".bam"` 
-    echo working on $base
+    echo working on test \
     alfa -g index.alfaindex \
     --bam $i $base \
     -p !{task.cpus} \
