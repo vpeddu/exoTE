@@ -254,7 +254,7 @@ process Rename {
 //conda "${baseDir}/env/env.yml"
 container "mgibio/samtools:1.9"
 beforeScript 'chmod o+rw .'
-cpus 1
+cpus 4
 input: 
     file holdFile
 output: 
@@ -281,7 +281,7 @@ fi
 for i in *.bam
 do
 newbase=`echo \$i | cut -f1 -d .`
-mv \$i \$newbase.bam
+samtools sort \$i -@ ${task.cpus} -o \$newbase.bam
 done
 
 """
