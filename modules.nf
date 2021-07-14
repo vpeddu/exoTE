@@ -409,12 +409,6 @@ script:
 echo logging 
 ls -lah
 
-#ctrls=`ls *ctrl* | grep -v / | tr '\\n' ' '`
-#exps=`ls | grep -v '*ctrL* | grep -v / | tr '\\n' ' '`
-
-#echo \$ctrls
-#echo \$exps
-
 TEcount \
     --format BAM \
     --mode uniq \
