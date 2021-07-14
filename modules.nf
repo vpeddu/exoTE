@@ -412,6 +412,7 @@ ls -lah
 TEcount \
     --format BAM \
     --mode uniq \
+    --sortByPos \
     -b ${bam} \
     --GTF ${genomic_GTF} \
     --TE ${repeat_GTF}
