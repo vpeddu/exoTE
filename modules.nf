@@ -420,7 +420,7 @@ TEcount \
     --mode uniq \
     -b ${bam} \
     --GTF ${genomic_GTF} \
-    --TE ${repeat_gtf}
+    --TE ${repeat_GTF}
 
 """
 }
