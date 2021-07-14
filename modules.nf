@@ -414,7 +414,10 @@ exps=`ls | grep -v '*ctrL* | grep -v / | tr '\\n' ' '`
 
 echo \$ctrls
 echo \$exps
+
+TEtranscripts --format BAM --mode uniq -c 05_25_21_R941_CTRL_EXOSOME_CDNA_Guppy_5.0.7_sup.minimap2.sorted.bam  -t VIKAS_224_PANC_EXORNA_6302021.minimap2.sorted.bam VIKAS_215_PANC_EXORNA_6302021.minimap2.sorted.bam --GTF ../../refs/gencode.v38.annotation.gtf --TE ../../refs/GRCh38_GENCODE_rmsk_TE.gtf --stranded no 
 """
+}
 
 process MultiQC{ 
 container "ewels/multiqc:1.10.1"
