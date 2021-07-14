@@ -409,7 +409,7 @@ script:
 echo logging 
 ls -lah
 
-base=`basename \$i .bam`
+base=`basename ${bam} .bam`
 
 echo base is \$base
 
@@ -422,7 +422,7 @@ TEcount \
     --TE ${repeat_GTF}
 
 mkdir \$base.TEtranscripts
-mv * \$base.TEtranscripts
+mv *TEtranscripts_out \$base.TEtranscripts
 """
 }
 
