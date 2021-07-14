@@ -389,6 +389,33 @@ done
 
 '''
 }
+
+process TEtranscripts{ 
+container "quay.io/vpeddu/alfa"
+beforeScript 'chmod o+rw .'
+cpus 1
+publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
+input: 
+    file bam
+    file genomic_GTF
+    file repeat_GTF
+output: 
+    file "*"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+ctrls=`ls *ctrl* | grep -v / | tr '\\n' ' '`
+exps=`ls | grep -v '*ctrL* | grep -v / | tr '\\n' ' '`
+
+echo \$ctrls
+echo \$exps
+"""
+
 process MultiQC{ 
 container "ewels/multiqc:1.10.1"
 beforeScript 'chmod o+rw .'

@@ -15,4 +15,8 @@ RUN apt update && \
                  ete3 \
 		 cython \
 		 pysam \
-		 alfa
+		 alfa 
+RUN wget https://github.com/mhammell-laboratory/TEtranscripts/archive/refs/heads/master.zip && \
+    unzip master.zip && \
+    cd TEtranscripts-master &&\
+    python3 setup.py install

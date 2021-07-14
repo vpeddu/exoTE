@@ -42,6 +42,7 @@ include { NanoPlot } from './modules.nf'
 include { FastQC } from './modules.nf'
 include { Chromoplots } from './modules.nf'
 include { Biotyping } from './modules.nf'
+include { TEtranscripts } from './modules.nf'
 include { MultiQC } from './modules.nf'
 
 
@@ -159,5 +160,10 @@ workflow{
     MultiQC( 
         file("${params.OUTPUT}/"),
         Rename.out
+    )
+    TEtranscripts( 
+        Rename.out.collect(),
+        file(genomic_GTF),
+        file(repeat_GTF)
     )
 }
