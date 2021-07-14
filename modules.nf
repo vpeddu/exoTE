@@ -422,7 +422,7 @@ TEcount \
     --TE ${repeat_GTF}
 
 mkdir \$base.TEtranscripts
-mv *TEtranscripts_out \$base.TEtranscripts
+mv *TEtranscripts_out* \$base.TEtranscripts
 """
 }
 
