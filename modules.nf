@@ -409,7 +409,7 @@ script:
 echo logging 
 ls -lah
 
-base=`basename \$i` .bam
+base=`basename \$i .bam`
 
 echo base is \$base
 
