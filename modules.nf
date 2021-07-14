@@ -409,9 +409,9 @@ script:
 echo logging 
 ls -lah
 
-base=`basename -s ".bam" \$i` 
+base=`basename \$i` .bam
 
-echo \$basename
+echo base is \$base
 
 TEcount \
     --format BAM \
@@ -421,8 +421,8 @@ TEcount \
     --GTF ${genomic_GTF} \
     --TE ${repeat_GTF}
 
-mkdir \$basename.TEtranscripts
-mv * \$basename.TEtranscripts
+mkdir \$base.TEtranscripts
+mv * \$base.TEtranscripts
 """
 }
 
