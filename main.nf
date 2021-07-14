@@ -162,7 +162,7 @@ workflow{
         Rename.out
     )
     TEtranscripts( 
-        Rename.out.collect(),
+        Rename.out.flatMap(),
         file(genomic_GTF),
         file(repeat_GTF)
     )
