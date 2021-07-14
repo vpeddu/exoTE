@@ -400,7 +400,7 @@ input:
     file genomic_GTF
     file repeat_GTF
 output: 
-    file "*"
+    file "*.TEtranscripts"
 
 script:
 """
@@ -408,6 +408,10 @@ script:
 
 echo logging 
 ls -lah
+
+base=`basename -s ".bam" \$i` 
+
+echo \$basename
 
 TEcount \
     --format BAM \
@@ -417,6 +421,8 @@ TEcount \
     --GTF ${genomic_GTF} \
     --TE ${repeat_GTF}
 
+mkdir \$basename.TEtranscripts
+mv * \$basename.TEtranscripts
 """
 }
 
