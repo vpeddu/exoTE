@@ -78,10 +78,6 @@ workflow{
         NanoPlot(
             input_read_Ch
         )
-        Transcript_length_SE( 
-                Rename.out.collect(),
-                file("${baseDir}/bin/transcript_length.r")
-            )
         }
     // defined at CLI
     else if ( params.ILLUMINA){ 
@@ -146,6 +142,10 @@ workflow{
         Rename( 
             Minimap2.out.collect()
         )
+        Transcript_length_SE( 
+                Rename.out.collect(),
+                file("${baseDir}/bin/transcript_length.r")
+            )
     }
     else if ( params.PAIRED_END ){ 
         Rename(
