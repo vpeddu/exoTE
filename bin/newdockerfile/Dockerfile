@@ -23,15 +23,15 @@ RUN apt update && \
 RUN apt-get -y update && \
     apt-get install -y default-jdk \
     r-cran-rjava \
-    r-cran-nloptr \
-    libssh2-1-dev \
+    r-cran-nloptr 
+    #libssh2-1-dev \
     #libcurl4-gnutls-dev \
-    libgit2-dev \
-    libfontconfig1-dev \
-    libcairo2-dev \
-    libxml2-dev \
-    libcurl4-openssl-dev \
-    libssl-dev
+    # libgit2-dev \
+    # libfontconfig1-dev \
+    # libcairo2-dev \
+    # libxml2-dev \
+    # libcurl4-openssl-dev \
+    # libssl-dev
 
 RUN wget https://github.com/mhammell-laboratory/TEtranscripts/archive/refs/heads/master.zip && \
     unzip master.zip && \
