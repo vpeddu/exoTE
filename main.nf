@@ -79,7 +79,7 @@ workflow{
             input_read_Ch
         )
         Transcript_length_SE( 
-                Minimap2.out[0].collect(),
+                Rename.out[0].collect(),
                 file("${baseDir}/bin/transcript_length.r")
             )
         }
