@@ -413,6 +413,12 @@ base=`basename ${bam} .bam`
 
 echo base is \$base
 
+allreads=`samtools view -c ${bam}`
+mappedreads=`samtools view -F 4 -c ${bam}`
+
+echo "total reads \$allreads"
+echo "reads mapped \$mappedreads"
+
 TEcount \
     --format BAM \
     --mode uniq \
@@ -421,6 +427,9 @@ TEcount \
     --GTF ${genomic_GTF} \
     --TE ${repeat_GTF}
 
+
+echo -e "mapped_reads\t\$mappedreads" >> TEtranscripts_out.cntTable
+echo -e "all_reads\t\$allreads" >> TEtranscripts_out.cntTable
 mv TEtranscripts_out.cntTable \$base.TEtranscripts.txt
 
 """
