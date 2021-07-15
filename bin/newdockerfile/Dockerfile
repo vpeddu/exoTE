@@ -25,7 +25,7 @@ RUN apt-get -y update && \
     r-cran-rjava \
     r-cran-nloptr \
     libssh2-1-dev \
-    libcurl4-gnutls-dev \
+    #libcurl4-gnutls-dev \
     libgit2-dev \
     libfontconfig1-dev \
     libcairo2-dev \

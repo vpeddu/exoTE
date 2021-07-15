@@ -45,6 +45,7 @@ include { Biotyping } from './modules.nf'
 include { Transcript_length_SE } from './modules.nf'
 include { Transcript_length_PE } from './modules.nf'
 include { TEtranscripts } from './modules.nf'
+include { Annotate_TEtranscripts } from './modules.nf'
 include { MultiQC } from './modules.nf'
 
 
@@ -179,5 +180,9 @@ workflow{
         Rename.out.flatMap(),
         file(genomic_GTF),
         file(repeat_GTF)
+    )
+    Annotate_TEtranscripts( 
+        TEtranscripts.out.collect(),
+        "${baseDir}/bin/annotate_teTranscripts.r"
     )
 }

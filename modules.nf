@@ -442,8 +442,10 @@ cpus 1
 publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
 input: 
     file bam
+    file tlengthscript
 output: 
-    file "*.TEtranscripts.txt"
+    file "*.pdf"
+
 
 script:
 """
@@ -461,7 +463,7 @@ samtools view -F 260 \$i | awk '{print length(\$10)}' >> \$base.flag260.counts.t
 samtools view -f 2048 \$i | awk '{print length(\$10)}' >> \$base.flag2048.counts.txt
 done 
 
-rscript --vanilla 
+rscript --vanilla ${tlengthscript}
 
 """
 }
@@ -473,8 +475,9 @@ cpus 1
 publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
 input: 
     file bam
+    file tlengthscript
 output: 
-    file "*.TEtranscripts.txt"
+    file "*.pdf"
 
 script:
 """
@@ -492,7 +495,30 @@ samtools view -F 260 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag260
 samtools view -f 2048 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag2048.counts.txt
 done 
 
-rscript --vanilla 
+rscript --vanilla ${tlengthscript}
+
+"""
+}
+
+process Annotate_TEtranscripts{ 
+container "quay.io/vpeddu/alfa"
+beforeScript 'chmod o+rw .'
+cpus 1
+publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
+input: 
+    file bam
+    file annotateTEtranscriptsscript
+output: 
+    file "annotated_CPM.csv"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+rscript --vanilla ${annotateTEtranscriptsscript}
 
 """
 }
