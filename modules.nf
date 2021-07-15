@@ -463,7 +463,7 @@ samtools view -F 260 \$i | awk '{print length(\$10)}' >> \$base.flag260.counts.t
 samtools view -f 2048 \$i | awk '{print length(\$10)}' >> \$base.flag2048.counts.txt
 done 
 
-rscript --vanilla ${tlengthscript}
+Rscript --vanilla ${tlengthscript}
 
 """
 }
@@ -495,7 +495,7 @@ samtools view -F 260 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag260
 samtools view -f 2048 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag2048.counts.txt
 done 
 
-rscript --vanilla ${tlengthscript}
+Rscript --vanilla ${tlengthscript}
 
 """
 }
@@ -518,7 +518,7 @@ script:
 echo logging 
 ls -lah
 
-rscript --vanilla ${annotateTEtranscriptsscript}
+Rscript --vanilla ${annotateTEtranscriptsscript}
 
 """
 }
