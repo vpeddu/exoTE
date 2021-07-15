@@ -400,7 +400,7 @@ input:
     file genomic_GTF
     file repeat_GTF
 output: 
-    file "*.TEtranscripts"
+    file "*.TEtranscripts.txt"
 
 script:
 """
@@ -421,8 +421,8 @@ TEcount \
     --GTF ${genomic_GTF} \
     --TE ${repeat_GTF}
 
-mkdir \$base.TEtranscripts
-mv *TEtranscripts_out* \$base.TEtranscripts
+mv TEtranscripts_out.cntTable \$base.TEtranscripts.txt
+
 """
 }
 
