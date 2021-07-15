@@ -42,6 +42,8 @@ include { NanoPlot } from './modules.nf'
 include { FastQC } from './modules.nf'
 include { Chromoplots } from './modules.nf'
 include { Biotyping } from './modules.nf'
+include { Transcript_length_SE } from './modules.nf'
+include { Transcript_length_PE } from './modules.nf'
 include { TEtranscripts } from './modules.nf'
 include { MultiQC } from './modules.nf'
 
@@ -101,6 +103,10 @@ workflow{
             FastQC(
                 Fastp_PE.out[1]
             )
+            Transcript_length_PE( 
+                Deduplicate.out[0].collect(),
+                file("${baseDir}/bin/transcript_length.r")
+            )
         }
 
         // start single end workflow
@@ -121,6 +127,10 @@ workflow{
                 )
             FastQC(
                 Fastp_SE.out[0]
+            )
+            Transcript_length_SE( 
+                Deduplicate.out[0].collect(),
+                file("${baseDir}/bin/transcript_length.r")
             )
             }
         }

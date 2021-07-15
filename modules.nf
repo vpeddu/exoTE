@@ -435,6 +435,68 @@ mv TEtranscripts_out.cntTable \$base.TEtranscripts.txt
 """
 }
 
+process Transcript_length_SE{ 
+container "quay.io/vpeddu/alfa"
+beforeScript 'chmod o+rw .'
+cpus 1
+publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
+input: 
+    file bam
+output: 
+    file "*.TEtranscripts.txt"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+for i in *.bam
+do
+base=`basename \$i .bam`
+# primary unique alignments
+samtools view -F 260 \$i | awk '{print length(\$10)}' >> \$base.flag260.counts.txt
+#supplementary alignments
+samtools view -f 2048 \$i | awk '{print length(\$10)}' >> \$base.flag2048.counts.txt
+done 
+
+rscript --vanilla 
+
+"""
+}
+
+process Transcript_length_PE{ 
+container "quay.io/vpeddu/alfa"
+beforeScript 'chmod o+rw .'
+cpus 1
+publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
+input: 
+    file bam
+output: 
+    file "*.TEtranscripts.txt"
+
+script:
+"""
+#!/bin/bash
+
+echo logging 
+ls -lah
+
+for i in *.bam
+do
+base=`basename \$i .bam`
+# primary unique alignments
+samtools view -F 260 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag260.counts.txt
+#supplementary alignments
+samtools view -f 2048 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag2048.counts.txt
+done 
+
+rscript --vanilla 
+
+"""
+}
+
 process MultiQC{ 
 container "ewels/multiqc:1.10.1"
 beforeScript 'chmod o+rw .'
