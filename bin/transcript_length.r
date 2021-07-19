@@ -47,7 +47,7 @@ labeled_peaks<-transcript_lengths + stat_peaks(
   hjust = -0.1
 )
 labeled_peaks
-ggsave(plot = pb , file = 'peaks_labeled_uniquely_mapped_transcript_lengths.pdf', height = 5, width = 10)
+ggsave(plot = labeled_peaks , file = 'peaks_labeled_uniquely_mapped_transcript_lengths.pdf', height = 5, width = 10)
 
 
 
@@ -96,4 +96,4 @@ labeled_peaks<-transcript_lengths + stat_peaks(
   hjust = -0.1
 )
 labeled_peaks
-ggsave(plot = pb , file = 'peaks_labeled_supplementary_transcript_lengths.pdf', height = 5, width = 10)
+ggsave(plot = labeled_peaks , file = 'peaks_labeled_supplementary_transcript_lengths.pdf', height = 5, width = 10)
