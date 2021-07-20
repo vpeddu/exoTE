@@ -215,8 +215,10 @@ STAR   \
     --readFilesIn ${r1} ${r2} \
     --readFilesCommand zcat      \
     --outSAMunmapped Within \
-    --outFileNamePrefix ${base}.star   \
-    --outSAMtype BAM   SortedByCoordinate   
+    --outFileNamePrefix ${base}.star  # \
+#    --outSAMtype BAM   SortedByCoordinate   
+
+samtools view -@ ${task.cpus} -Sb ${base}.starAligned.sortedByCoord.out.sam > ${base}.starAligned.sortedByCoord.out.bam
 """
 }
 process Star_SE { 
