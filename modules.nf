@@ -151,7 +151,7 @@ newbase=`echo ${sam} | cut -f1 -d .`
 
 samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
 
-java -jar /usr/picard/picard.jar MarkDuplicates \
+gatk  MarkDuplicates \
     I=\$newbase.original.bam \
     O=\$newbase.deduped.bam \
     M=metrics.txt \
