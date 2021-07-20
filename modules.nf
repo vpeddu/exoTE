@@ -150,7 +150,7 @@ ls -lah
 newbase=`echo ${sam} | cut -f1 -d .`
 
 samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
-samtools sort -M -@ ${task.cpus} \$newbase.original.bam -o \$newbase.original.sorted.bam
+samtools sort -@ ${task.cpus} \$newbase.original.bam -o \$newbase.original.sorted.bam
 
 gatk MarkDuplicates \
     -I \$newbase.original.sorted.bam \
