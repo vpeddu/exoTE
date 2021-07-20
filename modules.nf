@@ -150,7 +150,7 @@ ls -lah
 newbase=`echo ${sam} | cut -f1 -d .`
 
 samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
-samtools sort -@ ${task.cpus} \$newbase.original.bam -o \$newbase.original.sorted.bam
+samtools sort -M -@ ${task.cpus} \$newbase.original.bam -o \$newbase.original.sorted.bam
 
 gatk MarkDuplicates \
     -I \$newbase.original.sorted.bam \
@@ -465,7 +465,7 @@ base=`basename \$i .bam`
 # primary unique alignments
 samtools view -F 260 \$i | awk '{print length(\$10)}' >> \$base.flag260.counts.txt
 #supplementary alignments
-samtools view -f 2048 \$i | awk '{print length(\$10)}' >> \$base.flag2048.counts.txt
+samtools view -F 2048 \$i | awk '{print length(\$10)}' >> \$base.flag2048.counts.txt
 done 
 
 Rscript --vanilla ${tlengthscript}
@@ -497,7 +497,7 @@ base=`basename \$i .bam`
 # primary unique alignments
 samtools view -F 260 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag260.counts.txt
 #supplementary alignments
-samtools view -f 2048 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag2048.counts.txt
+samtools view -f 256 \$i | cut -f9 | awk '{print sqrt(\$0^2)}' >> \$base.flag256.counts.txt
 done 
 
 Rscript --vanilla ${tlengthscript}

@@ -52,7 +52,7 @@ ggsave(plot = labeled_peaks , file = 'peaks_labeled_uniquely_mapped_transcript_l
 
 
 
-files <- list.files(getwd(), pattern = '*flag2048.counts.txt', full.names = TRUE)
+files <- list.files(getwd(), pattern = '*flag256.counts.txt', full.names = TRUE)
 for(i in 1:length(files)){ 
   if( i == 1){ 
     fdf <- read.csv(files[i], sep = '\t',header = FALSE)
@@ -68,7 +68,7 @@ for(i in 1:length(files)){
 colnames(fdf)<-c('size','sample')
 
 transcript_lengths<-ggplot(fdf,aes(x = size, color = sample)) + 
-  ggtitle('Length of supplementary reads (flag: 2048)') +
+  ggtitle('Length of supplementary reads (flag: 256)') +
   scale_color_viridis_d() + 
   geom_freqpoly(binwidth = 10) + 
   scale_y_log10(limits = c(1,1e5)) + 
