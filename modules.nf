@@ -214,6 +214,7 @@ STAR   \
     --genomeDir ${starindex}   \
     --readFilesIn ${r1} ${r2} \
     --readFilesCommand zcat      \
+    --outSAMunmapped Within \
     --outFileNamePrefix ${base}.star   \
     --outSAMtype BAM   SortedByCoordinate   
 """
