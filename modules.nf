@@ -130,12 +130,12 @@ NanoPlot \
 }
 
 process Deduplicate { 
-container "broadinstitute/picard"
+container "broadinstitute/gatk"
 beforeScript 'chmod o+rw .'
 cpus 4
 publishDir "${params.OUTPUT}/Deduplicated/", mode: 'symlink'
 input: 
-    file bam
+    file sam
 output: 
     file "*.deduped.bam"
     file "*.txt"
@@ -147,10 +147,12 @@ script:
 echo logging 
 ls -lah
 
-newbase=`echo ${bam} | cut -f1 -d .`
+newbase=`echo ${sam} | cut -f1 -d .`
+
+samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
 
 java -jar /usr/picard/picard.jar MarkDuplicates \
-    I=${bam} \
+    I=\$newbase.original.bam \
     O=\$newbase.deduped.bam \
     M=metrics.txt \
     REMOVE_DUPLICATES=true 
@@ -200,7 +202,7 @@ input:
     file starindex
 output: 
     file "${base}.star*"
-    file "${base}.starAligned.sortedByCoord.out.bam"
+    file "${base}.starAligned.sortedByCoord.out.sam"
 script:
 """
 #!/bin/bash
@@ -218,7 +220,6 @@ STAR   \
     --outFileNamePrefix ${base}.star  # \
 #    --outSAMtype BAM   SortedByCoordinate   
 
-samtools view -@ ${task.cpus} -Sb ${base}.starAligned.sortedByCoord.out.sam > ${base}.starAligned.sortedByCoord.out.bam
 """
 }
 process Star_SE { 
