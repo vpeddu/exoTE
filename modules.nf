@@ -202,7 +202,7 @@ input:
     file starindex
 output: 
     file "${base}.star*"
-    file "${base}.starAligned.sortedByCoord.out.sam"
+    file "${base}.starAligned.out.sam"
 script:
 """
 #!/bin/bash
