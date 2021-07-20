@@ -151,10 +151,10 @@ newbase=`echo ${sam} | cut -f1 -d .`
 
 samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
 
-gatk  MarkDuplicates \
-    I=\$newbase.original.bam \
-    O=\$newbase.deduped.bam \
-    M=metrics.txt \
+gatk MarkDuplicates \
+    -I \$newbase.original.bam \
+    -O \$newbase.deduped.bam \
+    -M metrics.txt \
     REMOVE_DUPLICATES=true 
 """
 }
