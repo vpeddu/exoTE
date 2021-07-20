@@ -55,7 +55,7 @@ bam_biotyped<-bam_biotyped[!duplicated(bam_biotyped$qname),]
 #merging biotyping and read lengths
 biotyped_rl<-full_join(bam_biotyped, aggregated, by = c("qname" = "Var1"))
 
-biotype_rl_plot<-ggplot(biotyped_rl, aes(x = Var2, y = qwidth)) + 
+biotype_rl_plot<-ggplot(biotyped_rl, aes(x = reorder(Var2, qwidth), y = qwidth)) + 
   geom_boxplot() +
   theme_classic() + 
   #scale_y_log10(limits = c(1,1e7)) +
