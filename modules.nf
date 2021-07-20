@@ -153,7 +153,7 @@ samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
 samtools sort -@ ${taks.cpus} \$newbase.original.bam -o \$newbase.original.sorted.bam
 
 gatk MarkDuplicates \
-    -I \$newbase.original.bam \
+    -I \$newbase.original.sorted.bam \
     -O \$newbase.deduped.bam \
     -M metrics.txt \
     --REMOVE_DUPLICATES true 
