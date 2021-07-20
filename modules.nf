@@ -150,12 +150,13 @@ ls -lah
 newbase=`echo ${sam} | cut -f1 -d .`
 
 samtools view -@ ${task.cpus} -Sb ${sam} > \$newbase.original.bam
+samtools sort -@ ${taks.cpus} \$newbase.original.bam -o \$newbase.original.sorted.bam
 
 gatk MarkDuplicates \
     -I \$newbase.original.bam \
     -O \$newbase.deduped.bam \
     -M metrics.txt \
-    REMOVE_DUPLICATES=true 
+    --REMOVE_DUPLICATES true 
 """
 }
 
