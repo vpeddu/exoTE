@@ -444,7 +444,7 @@ process Transcript_length_SE{
 container "quay.io/vpeddu/alfa"
 beforeScript 'chmod o+rw .'
 cpus 1
-publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
+publishDir "${params.OUTPUT}/Transcriptlengths/", mode: 'symlink'
 input: 
     file bam
     file tlengthscript
@@ -477,7 +477,7 @@ process Transcript_length_PE{
 container "quay.io/vpeddu/alfa"
 beforeScript 'chmod o+rw .'
 cpus 1
-publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
+publishDir "${params.OUTPUT}/Transcriptlengths/", mode: 'symlink'
 input: 
     file bam
     file tlengthscript
