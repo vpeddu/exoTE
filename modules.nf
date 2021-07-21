@@ -377,6 +377,9 @@ bedtools intersect \
     -wb > intersected.bed
 
 Rscript --vanilla ${rscript} intersected.bed ${bam} \$base
+
+# saving space 
+rm intersected.bed
 """
 }
 

@@ -67,6 +67,9 @@ for(i in 1:length(files)){
 
 colnames(fdf)<-c('size','sample')
 
+save.image(file = 'testing.Rdata')
+
+
 transcript_lengths<-ggplot(fdf,aes(x = size, color = sample)) + 
   ggtitle('Length of supplementary reads (flag: 256)') +
   scale_color_viridis_d() + 
