@@ -453,7 +453,7 @@ base=`basename \$i .bam`
 # primary unique alignments
 samtools view -F 260 \$i | awk '{print length(\$10)}' >> \$base.flag260.counts.txt
 #supplementary alignments
-samtools view -F 2048 \$i | awk '{print length(\$10)}' >> \$base.flag2048.counts.txt
+samtools view -f 256 \$i | awk '{print length(\$10)}' >> \$base.flag256.counts.txt
 done 
 
 Rscript --vanilla ${tlengthscript}
