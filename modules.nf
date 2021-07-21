@@ -512,6 +512,7 @@ script:
 echo logging 
 ls -lah
 
+echo "starting rscript"
 Rscript --vanilla ${annotateTEtranscriptsscript}
 
 """
