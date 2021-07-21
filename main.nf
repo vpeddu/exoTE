@@ -184,6 +184,6 @@ workflow{
     )
     Annotate_TEtranscripts( 
         TEtranscripts.out.collect(),
-        "${baseDir}/bin/annotate_teTranscripts.r"
+        file("${baseDir}/bin/annotate_teTranscripts.r")
     )
 }
