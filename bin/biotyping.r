@@ -1,17 +1,20 @@
 library(Rsamtools)
 library(ggplot2)
 library(rtracklayer)
-library(svMisc)
 library(tidyverse)
 library(plyr)
 
+args = commandArgs(trailingOnly=TRUE)
+
 #read bedfile
 print('reading bed file')
-bedfile <-import("/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/testing/out.bed", format="bed")
+bedfile <-import(args[1], format="bed")
 
 #read bamfile
 print('reading bamfile')
-bam <- scanBam('/Users/vikas/Documents/UCSC/lab/kim_lab/exosomal_rna/testing/05_25_21_R941_CTRL_EXOSOME_CDNA_Guppy_5.0.7_sup.minimap2.sorted.bam')
+bam <- scanBam(args[2])
+
+base = args[3]
 
 df <- data.frame(readname = bedfile$name, bed_info = bedfile$NA.8)
 df$biotype<-gsub('\\"','',  df$bed_info)
@@ -34,6 +37,8 @@ aggregated$max_score<-NULL
 
 plot_df <- aggregate(aggregated$Freq, by=list(Category=aggregated$Var2), FUN=sum)
   
+save.image(file=paste0(base,"biotyping.Rdata"))
+
 biotype_plot<-ggplot(plot_df, aes(x = Category, y = x, fill = Category)) + 
   geom_bar(stat = 'identity') + 
   theme_classic() + 
@@ -45,6 +50,7 @@ biotype_plot<-ggplot(plot_df, aes(x = Category, y = x, fill = Category)) +
   xlab('Biotype') +
   scale_fill_viridis_d() 
 biotype_plot
+ggsave(plot = biotype_plot, file = paste0(base,'biotype_plot.pdf'), height = 5, width = 5)
 
 #Pulling read length by biotype
 bam_df<-do.call("DataFrame", bam)
@@ -55,7 +61,7 @@ bam_biotyped<-bam_biotyped[!duplicated(bam_biotyped$qname),]
 #merging biotyping and read lengths
 biotyped_rl<-full_join(bam_biotyped, aggregated, by = c("qname" = "Var1"))
 
-biotype_rl_plot<-ggplot(biotyped_rl, aes(x = reorder(Var2, qwidth), y = qwidth)) + 
+biotype_rl_plot<-ggplot(biotyped_rl, aes(x = Var2, y = qwidth)) + 
   geom_boxplot() +
   theme_classic() + 
   #scale_y_log10(limits = c(1,1e7)) +
@@ -66,3 +72,5 @@ biotype_rl_plot<-ggplot(biotyped_rl, aes(x = reorder(Var2, qwidth), y = qwidth))
   xlab('Biotype') +
   scale_fill_viridis_d() 
 biotype_rl_plot
+
+ggsave(plot = biotype_rl_plot, file = paste0(base,'biotype_rl_plot.pdf'), height = 5, width = 5)

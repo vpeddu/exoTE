@@ -170,7 +170,8 @@ workflow{
     }
     Biotyping(
         Rename.out.collect(),
-        file(genomic_GTF)
+        file(genomic_GTF),
+        file("${baseDir}/bin/biotyping.r")
     )
     MultiQC( 
         file("${params.OUTPUT}/"),

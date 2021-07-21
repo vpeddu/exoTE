@@ -354,7 +354,7 @@ process Biotyping{
 container "quay.io/vpeddu/alfa"
 beforeScript 'chmod  o+rw .'
 cpus 8
-publishDir "${params.OUTPUT}/Alfa/", mode: 'symlink'
+publishDir "${params.OUTPUT}/Biotyping/", mode: 'symlink'
 input: 
     file bam
     file genomic_GTF
@@ -362,37 +362,21 @@ output:
     file "*.pdf"
 
 shell:
-'''
+"""
 #!/bin/bash
 echo logging ls
 ls -lah
 
+base=`basename ${bam} .bam`
 
-#sorting GTF
-sort -k1,1 -k4,4n -k5,5nr !{genomic_GTF} > sorted_gtf.gtf
-echo "finished sort"
+bedtools intersect \
+    -abam ${bam} \
+    -b ${genomic_GTF} \
+    -bed \
+    -wb > interescted.bed
 
-#renaming biotype field 
-sed -i 's/gene_type/gene_biotype/g' sorted_gtf.gtf
-echo "finished rename"
-
-#index generation
-alfa -a sorted_gtf.gtf -g index.alfaindex -p !{task.cpus}
-echo "finished index generation"
-
-for i in *.bam
-do
-    base=`basename $i ".bam"` 
-    echo working on $base
-    alfa -g index.alfaindex \
-    --bam $i $base \
-    -p !{task.cpus} \
-    -d 3
-    mv ALFA_plots.Biotypes.pdf $base.Biotypes.pdf
-    mv ALFA_plots.Categories.pdf $base.Categories.pdf
-done 
-
-'''
+Rscript --vanilla intersected.bed ${bam} \$base
+"""
 }
 
 process TEtranscripts{ 
