@@ -69,6 +69,7 @@ RUN R -e "install.packages('ggstance',dependencies=TRUE, repos='http://cran.rstu
 RUN R -e "install.packages('ggplotify',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('chromoMap',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('ggpmisc',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "BiocManager::install('ensembldb')"
 
 
 

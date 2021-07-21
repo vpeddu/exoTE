@@ -27,10 +27,10 @@ freq_table<-as.data.frame(table(df$readname, df$biotype))
 freq_table$Freq<-as.numeric(as.character(freq_table$Freq))
 freq_table$Var1<-as.character(freq_table$Var1)
 
-aggregated<- freq_table %>% group_by(Var1) %>%  
-  mutate(max_score = max(Freq)) %>% 
-  ungroup() %>% 
-  filter(Freq==max_score)
+aggregated<- freq_table %>% dplyr::group_by(Var1) %>%  
+  dplyr::mutate(max_score = max(Freq)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::filter(Freq==max_score)
 
 aggregated<-aggregated[(!duplicated(aggregated$Var1)),]
 aggregated$max_score<-NULL

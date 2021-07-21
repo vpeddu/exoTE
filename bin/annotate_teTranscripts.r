@@ -4,7 +4,7 @@ library(ensembldb)
 
 
 #args = commandArgs(trailingOnly=TRUE)
-print('here1')
+
 files <- list.files(getwd(), pattern = '*.TEtranscripts.txt', full.names = TRUE)
 for(i in 1:length(files)){ 
   if( i == 1){ 
@@ -17,7 +17,7 @@ for(i in 1:length(files)){
     colnames(fdf)[ncol(fdf)]<-strsplit(basename(files[i]), '[.]')[[1]][1]
     }
   }
-print('here2')
+
 mapped_norm<-fdf
 for(i in 2:ncol(fdf)){ 
   mapped_norm[,i]<-1e6 * fdf[,i] / fdf[(nrow(fdf) - 1),i]
