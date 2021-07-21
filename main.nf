@@ -169,7 +169,7 @@ workflow{
     )
     }
     Biotyping(
-        Rename.out.collect(),
+        Rename.out.flatMap(),
         file(genomic_GTF),
         file("${baseDir}/bin/biotyping.r")
     )
