@@ -374,7 +374,7 @@ bedtools intersect \
     -abam ${bam} \
     -b ${genomic_GTF} \
     -bed \
-    -wb > interescted.bed
+    -wb > intersected.bed
 
 Rscript --vanilla ${rscript} intersected.bed ${bam} \$base
 """
