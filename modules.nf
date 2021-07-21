@@ -500,7 +500,7 @@ beforeScript 'chmod o+rw .'
 cpus 1
 publishDir "${params.OUTPUT}/TEtranscripts/", mode: 'symlink'
 input: 
-    file bam
+    file tetranscriptsfiles
     file annotateTEtranscriptsscript
 output: 
     file "annotated_CPM.csv"
