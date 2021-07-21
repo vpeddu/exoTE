@@ -37,9 +37,9 @@ aggregated$max_score<-NULL
 
 plot_df <- aggregate(aggregated$Freq, by=list(Category=aggregated$Var2), FUN=sum)
   
-save.image(file=paste0(base,"biotyping.Rdata"))
+save.image(file=paste0(base,"_biotyping.Rdata"))
 
-biotype_plot<-ggplot(plot_df, aes(x = Category, y = x, fill = Category)) + 
+biotype_plot<-ggplot(plot_df, aes(x = reorder(Category, -x), y = x, fill = Category)) + 
   geom_bar(stat = 'identity') + 
   theme_classic() + 
   #scale_y_log10(limits = c(1,1e7)) +
@@ -50,7 +50,7 @@ biotype_plot<-ggplot(plot_df, aes(x = Category, y = x, fill = Category)) +
   xlab('Biotype') +
   scale_fill_viridis_d() 
 biotype_plot
-ggsave(plot = biotype_plot, file = paste0(base,'biotype_plot.pdf'), height = 5, width = 5)
+ggsave(plot = biotype_plot, file = paste0(base,'_biotype_plot.pdf'), height = 5, width = 5)
 
 #Pulling read length by biotype
 bam_df<-do.call("DataFrame", bam)
@@ -73,4 +73,29 @@ biotype_rl_plot<-ggplot(biotyped_rl, aes(x = Var2, y = qwidth)) +
   scale_fill_viridis_d() 
 biotype_rl_plot
 
-ggsave(plot = biotype_rl_plot, file = paste0(base,'biotype_rl_plot.pdf'), height = 5, width = 5)
+ggsave(plot = biotype_rl_plot, file = paste0(base,'_biotype_rl_plot.pdf'), height = 5, width = 5)
+
+
+#individual lnc histogram
+lnc_df<-biotyped_rl[biotyped_rl$Var2 == '"lncRNA"',]
+lnc_plot<-ggplot(lnc_df, aes(x = qwidth)) + 
+  geom_histogram(binwidth = 10) + 
+  theme_classic() + 
+  xlim(0,2000) + 
+  scale_y_continuous(expand = c(0, 0)) + 
+  xlab('read length (bp)') + 
+  ylab('frequency')
+lnc_plot  
+ggsave(lnc_plot, file = paste0(base, '_lnc_rna_rl_plot.pdf'), height = 5, width = 5)
+
+#individual protein coding histogram
+pc_df<-biotyped_rl[biotyped_rl$Var2 == '"protein_coding"',]
+pc_plot<-ggplot(pc_df, aes(x = qwidth)) + 
+  geom_histogram(binwidth = 10) + 
+  theme_classic() + 
+  xlim(0,2000) + 
+  scale_y_continuous(expand = c(0, 0)) + 
+  xlab('read length (bp)') + 
+  ylab('frequency')
+pc_plot  
+ggsave(pc_plot, file = paste0(base, '_protein_coding_rna_rl_plot.pdf'), height = 5, width = 5)
