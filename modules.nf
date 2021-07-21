@@ -361,6 +361,7 @@ input:
     file rscript
 output: 
     file "*.pdf"
+    file "*.Rdata"
 
 shell:
 """
