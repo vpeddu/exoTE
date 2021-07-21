@@ -358,6 +358,7 @@ publishDir "${params.OUTPUT}/Biotyping/", mode: 'symlink'
 input: 
     file bam
     file genomic_GTF
+    file rscript
 output: 
     file "*.pdf"
 
@@ -375,7 +376,7 @@ bedtools intersect \
     -bed \
     -wb > interescted.bed
 
-Rscript --vanilla intersected.bed ${bam} \$base
+Rscript --vanilla ${rscript} intersected.bed ${bam} \$base
 """
 }
 
