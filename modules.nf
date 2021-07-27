@@ -186,6 +186,9 @@ echo "running Minimap2 on ${base}"
 minimap2 \
     -ax map-ont \
     -t ${task.cpus} \
+    -L \
+    -Y \
+    -2 \
     ${Minimap2_ref} \
     ${r1} > \
     ${base}.minimap2.sam

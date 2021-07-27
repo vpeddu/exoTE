@@ -20,8 +20,10 @@ df <- data.frame(readname = bedfile$name, bed_info = bedfile$NA.8)
 df$biotype<-gsub('\\"','',  df$bed_info)
 
 df$biotype<-gsub('gene_type ', '' , gsub(';','',str_extract(df$bed_info,  'gene_type.(.*?);')))
+df$gene_name<-gsub('gene_name ', '' , gsub(';','',str_extract(df$bed_info,  'gene_name.(.*?);')))
 
 df$biotype<-factor(df$biotype)
+df$gene_name<-factor(df$gene_name)
 
 freq_table<-as.data.frame(table(df$readname, df$biotype))
 freq_table$Freq<-as.numeric(as.character(freq_table$Freq))
@@ -60,6 +62,9 @@ bam_biotyped<-bam_biotyped[!duplicated(bam_biotyped$qname),]
 
 #merging biotyping and read lengths
 biotyped_rl<-full_join(bam_biotyped, aggregated, by = c("qname" = "Var1"))
+gene_name_lookup_df<-df[!duplicated(df$readname),c(1,4)]
+
+biotyped_rl<-full_join(biotyped_rl, gene_name_lookup_df, by = c("qname" = "readname"))
 
 biotype_rl_plot<-ggplot(biotyped_rl, aes(x = Var2, y = qwidth)) + 
   geom_boxplot() +
@@ -99,3 +104,5 @@ pc_plot<-ggplot(pc_df, aes(x = qwidth)) +
   ylab('frequency')
 pc_plot  
 ggsave(pc_plot, file = paste0(base, '_protein_coding_rna_rl_plot.pdf'), height = 5, width = 5)
+
+
