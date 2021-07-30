@@ -418,7 +418,7 @@ echo "reads mapped \$mappedreads"
 
 TEcount \
     --format BAM \
-    --mode uniq \
+    --mode multi \
     --sortByPos \
     -b ${bam} \
     --GTF ${genomic_GTF} \
